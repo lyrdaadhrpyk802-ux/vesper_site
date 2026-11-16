@@ -1,0 +1,19 @@
+name = "v"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
+
+[[durable_objects.bindings]]
+name = "STATE"
+class_name = "VesperState"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["VesperState"]
+
+[observability]
+enabled = true

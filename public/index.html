@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0a0f">
+
+  <title>Vesper — The Unknown</title>
+  <meta name="description" content="Vesper — The Unknown. A whisper in the void.">
+  <link rel="canonical" href="https://v.vespernoir.workers.dev/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0a0f'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%23b8a9d9' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='3' fill='%23e8e6f0'/%3E%3C/svg%3E">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Vesper">
+  <meta property="og:title" content="Vesper — The Unknown">
+  <meta property="og:description" content="Vesper — The Unknown. A whisper in the void.">
+  <meta property="og:url" content="https://v.vespernoir.workers.dev/">
+  <meta property="og:image" content="https://raw.githubusercontent.com/lyrdaadhrpyk802-ux/vesper-backend/main/og-image.png">
+  <meta property="og:image:secure_url" content="https://raw.githubusercontent.com/lyrdaadhrpyk802-ux/vesper-backend/main/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Vesper — The Unknown">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Vesper — The Unknown">
+  <meta name="twitter:description" content="Vesper — The Unknown. A whisper in the void.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/lyrdaadhrpyk802-ux/vesper-backend/main/og-image.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b0a0f;
+      --text: #e8e6f0;
+      --muted: #8a8499;
+      --accent: #b8a9d9;
+      --accent2: #77659e;
+      --line: rgba(232, 230, 240, .12);
+      --mx: 50vw;
+      --my: 50vh;
+      --ease: cubic-bezier(.2, .8, .2, 1);
+    }
+
+    [hidden] { display: none !important; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; background: var(--bg); }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: Montserrat, sans-serif; font-weight: 300;
+      overflow-x: hidden; -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1000; opacity: .15;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+    }
+    body::after {
+      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+      background: radial-gradient(500px circle at var(--mx) var(--my), rgba(137, 111, 190, .09), transparent 70%);
+    }
+    a { color: inherit; }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    h1, h2, h3 { font-family: "Cormorant Garamond", serif; font-weight: 300; letter-spacing: .05em; }
+    p { line-height: 1.9; letter-spacing: .025em; }
+    ::selection { background: var(--accent); color: #100e16; }
+    a:active, button:active { filter: brightness(1.18); transform: scale(.98); }
+    a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: 1px solid var(--accent); outline-offset: 4px;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+
+    /* Custom cursor: mouse devices only */
+    #cursor, #cursor-dot { display: none; }
+    @media (hover: hover) and (pointer: fine) {
+      body, a, button, input, textarea, [role="button"] { cursor: none; }
+      #cursor {
+        display: block; position: fixed; left: 0; top: 0;
+        width: 22px; height: 22px; border: 1px solid rgba(255, 255, 255, .75); border-radius: 50%;
+        pointer-events: none; z-index: 2000; transform: translate(-50%, -50%);
+        transition: width .25s var(--ease), height .25s var(--ease), background .25s;
+        mix-blend-mode: difference;
+      }
+      #cursor-dot {
+        display: block; position: fixed; width: 4px; height: 4px; border-radius: 50%; background: #fff;
+        pointer-events: none; z-index: 2001; transform: translate(-50%, -50%);
+      }
+      body.hovering #cursor { width: 42px; height: 42px; background: rgba(184, 169, 217, .12); }
+    }
+
+    .progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 100%;
+      transform-origin: 0 50%; transform: scaleX(0);
+      background: linear-gradient(90deg, var(--accent2), var(--accent)); z-index: 150;
+    }
+
+    .loader {
+      position: fixed; inset: 0; background: #09080d; z-index: 3000;
+      display: grid; place-items: center; transition: opacity 1s, visibility 1s;
+    }
+    .loader.done { opacity: 0; visibility: hidden; }
+    .loader-inner { text-align: center; }
+    .loader-mark {
+      font: 300 clamp(2.5rem, 8vw, 5rem) "Cormorant Garamond", serif;
+      letter-spacing: .35em; color: var(--accent); animation: pulse 1.8s infinite;
+    }
+    .loader-line { height: 1px; width: 180px; background: rgba(255, 255, 255, .12); margin: 22px auto; overflow: hidden; }
+    .loader-line::after {
+      content: ""; display: block; height: 100%; background: var(--accent);
+      animation: loadline 1.8s ease forwards;
+    }
+    .loader small { color: var(--muted); letter-spacing: .35em; text-transform: uppercase; font-size: .6rem; }
+    @keyframes loadline { from { width: 0; } to { width: 100%; } }
+    @keyframes pulse { 50% { opacity: .45; } }
+
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; padding: 25px 5vw;
+      display: flex; justify-content: space-between; align-items: center; z-index: 100;
+      background: linear-gradient(to bottom, rgba(11, 10, 15, .65), transparent);
+      transition: padding .4s var(--ease), background .4s, border-color .4s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      padding-top: 16px; padding-bottom: 16px; background: rgba(11, 10, 15, .82);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom-color: var(--line);
+    }
+    .logo { font: 400 1.25rem "Cormorant Garamond", serif; letter-spacing: .28em; text-transform: uppercase; text-decoration: none; }
+    .nav-right { display: flex; align-items: center; gap: 25px; }
+    .nav-link {
+      font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; text-decoration: none;
+      color: var(--muted); transition: color .3s; position: relative;
+    }
+    .nav-link::after {
+      content: ""; position: absolute; left: 0; bottom: -6px; height: 1px; width: 100%;
+      background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .4s var(--ease);
+    }
+    .nav-link:hover, .nav-link.active { color: var(--accent); }
+    .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+    .sound-toggle, .menu-toggle, .ghost-btn {
+      background: none; border: 1px solid var(--line); color: var(--text);
+      padding: 9px 12px; font-size: .62rem; letter-spacing: .15em; text-transform: uppercase;
+      transition: border-color .3s, color .3s;
+    }
+    .sound-toggle:hover, .menu-toggle:hover, .ghost-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .menu-toggle { display: none; }
+    .mobile-menu {
+      position: fixed; top: 58px; left: 0; right: 0; display: none; flex-direction: column;
+      background: rgba(9, 8, 13, .97); border-bottom: 1px solid var(--line); padding: 6px 20px 14px; z-index: 99;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      padding: 15px 0; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--text);
+      font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+    }
+    .mobile-menu a:last-child { border-bottom: 0; }
+
+    .hero { height: 100vh; height: 100svh; min-height: 650px; position: relative; display: grid; place-items: center; overflow: hidden; }
+    .hero-bg {
+      position: absolute; inset: -8%; overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% 75%, rgba(105, 82, 145, .30), transparent 38%),
+        radial-gradient(ellipse at 18% 30%, rgba(68, 64, 105, .22), transparent 34%),
+        radial-gradient(ellipse at 82% 22%, rgba(93, 67, 119, .18), transparent 32%),
+        linear-gradient(155deg, #09080e 5%, #171421 48%, #08070c 100%);
+      animation: kenburns 28s ease-in-out infinite alternate; will-change: transform;
+    }
+    .hero-bg::before {
+      content: ""; position: absolute; width: 70vw; height: 70vw; max-width: 900px; max-height: 900px;
+      left: 50%; top: 55%; transform: translate(-50%, -50%); border: 1px solid rgba(205, 190, 230, .08); border-radius: 50%;
+      box-shadow: 0 0 0 70px rgba(205, 190, 230, .018), 0 0 0 140px rgba(205, 190, 230, .014), 0 0 100px rgba(153, 125, 194, .12);
+      animation: orbit 38s linear infinite;
+    }
+    .hero-bg::after {
+      content: ""; position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(115deg, transparent 0 8%, rgba(255, 255, 255, .012) 8.1%, transparent 8.3% 17%),
+        linear-gradient(to bottom, rgba(5, 4, 9, .12), rgba(5, 4, 9, .2) 55%, var(--bg));
+      mix-blend-mode: screen; opacity: .65;
+    }
+    @keyframes orbit { to { transform: translate(-50%, -50%) rotate(360deg); } }
+    @keyframes kenburns { to { transform: scale(1.12) translate(-1%, -1%); } }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(11, 10, 15, .1), rgba(11, 10, 15, .22) 45%, var(--bg) 100%); }
+    #particles { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .hero-content {
+      position: relative; text-align: center; padding: 0 20px; z-index: 2;
+      transform: translate3d(var(--parallax-x, 0), var(--parallax-y, 0), 0); transition: transform .6s var(--ease);
+    }
+    .eyebrow {
+      font-size: .65rem; letter-spacing: .5em; text-transform: uppercase; color: var(--accent);
+      margin-bottom: 25px; opacity: 0; animation: fadeup 1.4s .5s forwards;
+    }
+    .hero-title { font-size: clamp(4rem, 13vw, 10rem); line-height: .9; margin-bottom: 28px; text-shadow: 0 5px 35px #000; overflow: hidden; }
+    .hero-title span { display: inline-block; opacity: 0; transform: translateY(110%); animation: reveal 1.3s var(--ease) forwards; }
+    .hero-title span:nth-child(2) { animation-delay: .2s; }
+    .hero-title span:nth-child(3) { animation-delay: .4s; }
+    .hero-sub {
+      font-size: .72rem; letter-spacing: .55em; text-transform: uppercase; color: #d2c6e7;
+      opacity: 0; animation: fadeup 1.6s 1s forwards;
+    }
+    @keyframes reveal { to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeup { to { opacity: 1; transform: translateY(0); } }
+    .scroll-hint {
+      position: absolute; bottom: 38px; left: 50%; transform: translateX(-50%);
+      font-size: .55rem; letter-spacing: .3em; color: var(--muted); text-transform: uppercase;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+    }
+    .scroll-hint::after {
+      content: ""; height: 42px; width: 1px; background: linear-gradient(var(--accent), transparent);
+      animation: scrollline 2s infinite;
+    }
+    @keyframes scrollline { 50% { transform: scaleY(.5); transform-origin: top; } }
+
+    section { position: relative; }
+    .section-kicker { font-size: .62rem; letter-spacing: .4em; color: var(--accent); text-transform: uppercase; margin-bottom: 22px; }
+    .section-title { font-size: clamp(2.8rem, 6vw, 5rem); margin-bottom: 35px; }
+    .reveal { opacity: 0; transform: translateY(35px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .magnetic { transition: transform .35s var(--ease), background .35s, color .35s, border-color .35s; }
+
+    .about { min-height: 90vh; display: grid; place-items: center; padding: 130px 24px; }
+    .section-inner { max-width: 760px; text-align: center; }
+    .about p { font-size: 1rem; color: var(--muted); margin: 0 auto 20px; max-width: 680px; }
+    .ghost-text { color: var(--accent); font-style: italic; }
+
+    .countdown {
+      min-height: 65vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 100px 20px;
+      background: radial-gradient(ellipse at center, rgba(119, 101, 158, .1), transparent 65%);
+    }
+    .count-label { font-size: .65rem; letter-spacing: .4em; text-transform: uppercase; color: var(--muted); margin-bottom: 30px; }
+    .count-grid { display: flex; gap: clamp(15px, 5vw, 65px); align-items: flex-start; }
+    .count-unit strong {
+      font: 300 clamp(3.5rem, 10vw, 7.5rem) "Cormorant Garamond", serif;
+      display: block; line-height: 1; color: var(--text); font-variant-numeric: tabular-nums;
+    }
+    .count-unit span { font-size: .55rem; letter-spacing: .25em; text-transform: uppercase; color: var(--accent); }
+    .birthday-title {
+      font: italic clamp(2.6rem, 7vw, 5.5rem) "Cormorant Garamond", serif; color: var(--accent);
+      line-height: 1.1; text-shadow: 0 0 40px rgba(184, 169, 217, .25);
+    }
+    .birthday-sub { margin-top: 20px; color: var(--muted); font-size: .8rem; letter-spacing: .08em; }
+
+    .gallery { padding: 110px 5vw 150px; overflow: hidden; }
+    .gallery-head { text-align: center; margin-bottom: 70px; }
+    .gallery-head h2 { font-size: clamp(2.7rem, 6vw, 5rem); font-style: italic; color: var(--accent); }
+    .gallery-head p { font-size: .75rem; color: var(--muted); margin-top: 15px; }
+    .gallery-grid { max-width: 1180px; margin: auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; align-items: stretch; }
+    .gallery-item {
+      position: relative; isolation: isolate; overflow: hidden; min-height: 440px; padding: 28px;
+      display: flex; align-items: flex-end; border: 1px solid var(--line); background: #0c0b12;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, .3);
+    }
+    .gallery-item:nth-child(2) { margin-top: 50px; }
+    .gallery-item:nth-child(3) { margin-top: 100px; }
+    .gallery-item::after {
+      content: ""; position: absolute; inset: 14px; pointer-events: none;
+      border: 1px solid rgba(255, 255, 255, .10); z-index: 1;
+    }
+    .gallery-item::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+      background: radial-gradient(260px circle at var(--gx, 50%) var(--gy, 50%), rgba(200, 180, 240, .16), transparent 70%);
+      opacity: 0; transition: opacity .5s;
+    }
+    .gallery-item:hover::before { opacity: 1; }
+    .artwork { position: absolute; inset: 0; z-index: -2; overflow: hidden; transition: transform 1.6s var(--ease), filter 1.6s; }
+    .artwork svg { width: 100%; height: 100%; display: block; }
+    .gallery-item:hover .artwork { transform: scale(1.04); filter: brightness(1.12); }
+    .artwork::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(to top, rgba(5, 4, 9, .94) 0%, rgba(5, 4, 9, .25) 45%, transparent 70%);
+    }
+    .gallery-index { position: absolute; top: 30px; left: 30px; z-index: 2; color: rgba(235, 228, 247, .6); font: .62rem "Share Tech Mono", monospace; letter-spacing: .2em; }
+    .gallery-caption { position: relative; z-index: 2; font: italic 1.6rem "Cormorant Garamond", serif; letter-spacing: .04em; text-shadow: 0 2px 15px #000; }
+
+    .cosmos { padding: 110px 20px; text-align: center; }
+    .globe-wrap {
+      position: relative; max-width: 1100px; margin: 35px auto 0;
+      height: min(640px, 72vh); min-height: 420px;
+      border: 1px solid rgba(184, 169, 217, .18);
+      background: radial-gradient(ellipse at 50% 50%, rgba(119, 101, 158, .14), transparent 70%);
+      overflow: hidden; box-shadow: 0 30px 100px rgba(0, 0, 0, .35);
+    }
+    #globe { position: absolute; inset: 0; }
+    #globe canvas { display: block; }
+    .hud {
+      position: absolute; left: 20px; bottom: 18px; z-index: 3; pointer-events: none;
+      text-align: left; font: .6rem "Share Tech Mono", monospace; color: var(--muted); letter-spacing: .12em; line-height: 1.9;
+    }
+    .hud b { color: var(--accent); font-weight: 400; }
+    .hud-title {
+      position: absolute; top: 18px; left: 20px; z-index: 3; pointer-events: none;
+      font: .6rem "Share Tech Mono", monospace; letter-spacing: .25em; color: var(--accent); text-transform: uppercase;
+    }
+    .globe-tools { position: absolute; top: 12px; right: 12px; z-index: 4; }
+    .globe-tools .ghost-btn { background: rgba(11, 10, 15, .6); backdrop-filter: blur(6px); }
+    .body-wrap { pointer-events: none; }
+    .body-dot { position: relative; transform: translate(-50%, -50%); pointer-events: none; }
+    .body-dot span {
+      position: absolute; left: 18px; top: -7px; white-space: nowrap;
+      font: .55rem "Share Tech Mono", monospace; letter-spacing: .14em; color: var(--accent); text-shadow: 0 0 8px #000;
+    }
+    .body-dot.moon {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #ffffff, #cfc3e6 45%, #5d4f7d 90%);
+      box-shadow: 0 0 18px rgba(230, 220, 255, .55);
+    }
+    .body-dot.sun {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: radial-gradient(circle, #fffaf0 0%, #ffd27a 30%, rgba(255, 170, 60, .35) 55%, rgba(255, 150, 40, 0) 70%);
+      box-shadow: 0 0 46px rgba(255, 190, 90, .55);
+    }
+    .body-dot.sun span { color: #ffd98f; }
+
+    .pin-detail {
+      position: absolute; left: 50%; top: 60px; transform: translateX(-50%); z-index: 5;
+      display: none; min-width: 230px; max-width: 320px; padding: 16px 18px; text-align: left;
+      background: rgba(12, 11, 18, .95); border: 1px solid rgba(184, 169, 217, .3); box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+    }
+    .pin-detail.open { display: block; }
+    .pd-name { font: 300 1.5rem "Cormorant Garamond", serif; color: var(--accent); }
+    .pd-msg { margin: 8px 0 10px; font-size: .78rem; color: var(--text); line-height: 1.6; word-break: break-word; }
+    .pd-meta { font: .55rem "Share Tech Mono", monospace; color: var(--muted); letter-spacing: .1em; line-height: 1.8; }
+    .pd-close { position: absolute; top: 6px; right: 8px; background: none; border: 0; color: var(--muted); font-size: .9rem; }
+    .pd-close:hover { color: var(--accent); }
+
+    .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 660px; margin: 40px auto 0; }
+    .stat { border: 1px solid var(--line); padding: 22px 10px; background: rgba(12, 11, 18, .6); }
+    .stat strong { display: block; font: 300 2.3rem "Cormorant Garamond", serif; color: var(--accent); }
+    .stat span { font-size: .55rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+
+    .pin-card {
+      position: relative; max-width: 660px; margin: 40px auto 0; padding: 34px 30px;
+      background: linear-gradient(145deg, rgba(24, 21, 34, .94), rgba(10, 9, 15, .92));
+      border: 1px solid rgba(184, 169, 217, .22); box-shadow: 0 30px 100px rgba(0, 0, 0, .28); text-align: left;
+    }
+    .pin-card h3 { font-size: 2rem; text-align: center; margin-bottom: 8px; }
+    .pin-card .sub { text-align: center; font-size: .72rem; color: var(--muted); margin-bottom: 22px; line-height: 1.8; }
+    .pin-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: stretch; margin-top: 10px; }
+    .pin-row input {
+      flex: 1; min-width: 160px; background: rgba(5, 5, 9, .35); border: 1px solid var(--line);
+      color: var(--text); padding: 13px 14px; outline: none; transition: border-color .3s;
+    }
+    .pin-row input:focus { border-color: rgba(184, 169, 217, .55); }
+    .field-label { display: block; margin-top: 22px; font-size: .58rem; letter-spacing: .2em; color: var(--accent); text-transform: uppercase; }
+    .guide {
+      margin-top: 16px; padding: 16px 18px; border-left: 1px solid rgba(184, 169, 217, .4);
+      background: rgba(5, 5, 9, .3); font-size: .7rem; line-height: 1.85; color: var(--muted);
+    }
+    .guide b { color: var(--text); font-weight: 400; }
+    .guide code { font-family: "Share Tech Mono", monospace; color: var(--accent); }
+    .pick-line { margin-top: 14px; font: .62rem "Share Tech Mono", monospace; letter-spacing: .1em; color: var(--muted); text-align: center; }
+    .pick-line b { color: var(--accent); font-weight: 400; }
+    .pin-submit {
+      margin-top: 18px; width: 100%; background: transparent; border: 1px solid var(--accent2); color: var(--accent);
+      padding: 14px 20px; font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
+      transition: background .3s, color .3s, box-shadow .3s;
+    }
+    .pin-submit:hover { background: var(--accent); color: var(--bg); box-shadow: 0 0 40px rgba(184, 169, 217, .2); }
+    .pin-submit:disabled { opacity: .55; cursor: wait; }
+    .pin-status { margin-top: 14px; font-size: .65rem; color: var(--muted); min-height: 18px; line-height: 1.8; text-align: center; word-break: break-word; }
+    .pin-privacy { margin-top: 10px; font-size: .56rem; letter-spacing: .08em; color: #6f6880; text-align: center; line-height: 1.7; }
+
+    /* Removal code box (shown once, with a copy button) */
+    .code-box {
+      margin-top: 18px; padding: 18px; border: 1px solid rgba(184, 169, 217, .35);
+      background: rgba(5, 5, 9, .45);
+    }
+    .code-label { font-size: .58rem; letter-spacing: .16em; color: var(--accent); text-transform: uppercase; text-align: center; margin-bottom: 12px; line-height: 1.7; }
+    .code-row { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .code-value {
+      font: 400 1.4rem "Share Tech Mono", monospace; letter-spacing: .3em; color: var(--text);
+      padding: 10px 16px; border: 1px dashed rgba(184, 169, 217, .4); user-select: none;
+    }
+    .code-row .ghost-btn.copied { border-color: var(--accent); color: var(--accent); }
+
+    .my-pins { margin-top: 18px; font-size: .62rem; color: var(--muted); letter-spacing: .08em; }
+    .my-pin { display: flex; justify-content: space-between; align-items: center; gap: 10px; border-top: 1px solid var(--line); padding: 10px 0; }
+    .my-pin .ghost-btn { padding: 8px 12px; }
+    .pins { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 30px auto 0; max-width: 900px; }
+    .pin-chip {
+      border: 1px solid var(--line); background: none; color: var(--text); padding: 9px 14px;
+      font-size: .6rem; letter-spacing: .14em; text-transform: uppercase;
+      transition: border-color .3s, color .3s, transform .3s var(--ease);
+    }
+    .pin-chip:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .pin-count { margin-top: 18px; font-size: .58rem; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; }
+
+    .fragments { padding: 100px 24px; text-align: center; background: linear-gradient(180deg, transparent, rgba(119, 101, 158, .06), transparent); }
+    .quote { font: italic clamp(2rem, 5vw, 4rem) "Cormorant Garamond", serif; max-width: 900px; margin: 25px auto; color: #c7bdd8; }
+    .quote-credit { font-size: .6rem; letter-spacing: .35em; color: var(--muted); text-transform: uppercase; }
+
+    .connections { padding: 110px 24px; text-align: center; }
+    .socials { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-top: 35px; }
+    .socials a {
+      border: 1px solid var(--line); padding: 14px 24px; text-decoration: none;
+      font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+      transition: transform .35s var(--ease), border-color .35s, color .35s;
+    }
+    .socials a:hover { border-color: var(--accent); color: var(--accent); }
+    .socials a.primary { border-color: var(--accent2); color: var(--accent); }
+
+    .terminal-section { padding: 100px 24px; display: grid; place-items: center; }
+    .terminal-wrap { width: min(760px, 100%); }
+    .terminal-wrap .section-title, .terminal-wrap .section-kicker { text-align: center; }
+    .terminal {
+      width: 100%; border: 1px solid rgba(184, 169, 217, .25); background: rgba(7, 7, 11, .85);
+      box-shadow: 0 20px 80px #0008; text-align: left; font-family: "Share Tech Mono", monospace;
+    }
+    .terminal-bar { padding: 13px 17px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: .7rem; display: flex; justify-content: space-between; gap: 12px; }
+    .terminal-body { padding: 24px; min-height: 230px; color: #b8a9d9; font-size: .82rem; line-height: 1.9; }
+    .terminal-output { white-space: pre-wrap; min-height: 160px; color: #c5bdd5; overflow-wrap: anywhere; }
+    .terminal-form { display: flex; gap: 10px; border-top: 1px solid var(--line); padding: 14px 20px; }
+    .terminal-form label { color: var(--accent); }
+    .terminal-form input { flex: 1; background: none; border: 0; outline: 0; color: var(--text); font-family: inherit; min-width: 0; }
+
+    .diary { padding: 115px 24px 125px; text-align: center; position: relative; overflow: hidden; }
+    .diary::before {
+      content: ""; position: absolute; width: 600px; height: 600px; left: 50%; top: 48%;
+      transform: translate(-50%, -50%); border-radius: 50%;
+      background: radial-gradient(circle, rgba(119, 101, 158, .10), transparent 68%); pointer-events: none;
+    }
+    .diary p.lede { color: var(--muted); max-width: 560px; margin: 0 auto; }
+    .cta-btn {
+      position: relative; display: inline-flex; align-items: center; gap: 16px; margin-top: 40px;
+      padding: 18px 40px; border: 1px solid var(--accent2); color: var(--accent); text-decoration: none;
+      font-size: .7rem; letter-spacing: .25em; text-transform: uppercase; background: transparent;
+      transition: background .35s, color .35s, box-shadow .35s, transform .35s var(--ease);
+    }
+    .cta-btn:hover { background: var(--accent); color: var(--bg); box-shadow: 0 0 45px rgba(184, 169, 217, .25); }
+    .cta-note { margin-top: 22px; font-size: .58rem; letter-spacing: .16em; color: var(--muted); text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .signal-dot { width: 6px; height: 6px; border-radius: 50%; background: #9b8ab9; box-shadow: 0 0 12px #9b8ab9; animation: pulse 2s infinite; }
+
+    .visitor { padding: 55px 20px; text-align: center; color: var(--muted); font-size: .62rem; letter-spacing: .25em; text-transform: uppercase; }
+    .visitor strong { display: block; font: 300 2.3rem "Cormorant Garamond", serif; color: var(--accent); margin-top: 10px; }
+    .visitor small { display: block; margin-top: 8px; font-size: .5rem; letter-spacing: .15em; }
+    .end-section { min-height: 55vh; display: grid; place-items: center; text-align: center; padding: 80px 20px; }
+    .end-text { font: italic clamp(4rem, 10vw, 8rem) "Cormorant Garamond", serif; color: var(--muted); transition: color 2s, text-shadow 2s; }
+    .end-text:hover { color: var(--text); text-shadow: 0 0 35px #b8a9d944; }
+    .end-sub { color: var(--muted); font-size: .65rem; letter-spacing: .3em; margin-top: 20px; }
+    footer { border-top: 1px solid var(--line); padding: 30px 20px; text-align: center; color: var(--muted); font-size: .58rem; letter-spacing: .3em; }
+    footer .foot-line { margin-top: 10px; letter-spacing: .12em; }
+
+    .to-top {
+      position: fixed; right: 22px; bottom: 22px; z-index: 90; width: 44px; height: 44px; display: grid; place-items: center;
+      border: 1px solid var(--line); background: rgba(17, 16, 25, .8); color: var(--accent);
+      opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .4s, transform .4s var(--ease), border-color .3s;
+    }
+    .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+    .to-top:hover { border-color: var(--accent); }
+
+    .modal {
+      position: fixed; inset: 0; z-index: 1500; background: rgba(4, 4, 8, .88); backdrop-filter: blur(15px);
+      display: none; place-items: center; padding: 20px;
+    }
+    .modal.open { display: grid; }
+    .modal-card { width: min(440px, 100%); background: #111019; border: 1px solid var(--line); padding: 35px; text-align: center; }
+    .modal-card h3 { font-size: 2.3rem; margin-bottom: 15px; }
+    .modal-card p { font-size: .8rem; color: var(--muted); margin-bottom: 20px; }
+    .modal-card input { width: 100%; background: transparent; border: 1px solid var(--line); padding: 13px; color: var(--text); outline: none; text-align: center; }
+    .modal-card input:focus { border-color: rgba(184, 169, 217, .55); }
+    .close-modal { background: none; border: 0; color: var(--muted); margin-top: 20px; font-size: .65rem; letter-spacing: .2em; }
+    .close-modal:hover { color: var(--accent); }
+    .secret-screen { position: fixed; inset: 0; z-index: 1400; background: #08070c; display: none; place-items: center; text-align: center; padding: 25px; }
+    .secret-screen.open { display: grid; }
+    .secret-screen h2 { font-size: clamp(3rem, 9vw, 7rem); color: var(--accent); }
+    .secret-screen p { color: var(--muted); max-width: 550px; margin: 20px auto; }
+    .secret-screen button { background: none; border: 1px solid var(--line); color: var(--text); padding: 12px 20px; margin-top: 20px; }
+    .toast {
+      position: fixed; bottom: 25px; left: 50%; transform: translate(-50%, 20px); opacity: 0; z-index: 2200;
+      background: #171421; border: 1px solid var(--line); padding: 13px 20px; color: var(--accent);
+      font-size: .7rem; letter-spacing: .1em; transition: opacity .4s, transform .4s var(--ease);
+      pointer-events: none; text-align: center; max-width: calc(100% - 40px);
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 1100px) {
+      .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .gallery-item:nth-child(2), .gallery-item:nth-child(3) { margin-top: 0; }
+      .gallery-item:nth-child(2n) { margin-top: 40px; }
+    }
+    @media (max-width: 900px) {
+      .nav-link { display: none; }
+      .menu-toggle { display: inline-block; }
+    }
+    @media (max-width: 760px) {
+      nav { padding: 18px 20px; }
+      nav.scrolled { padding-top: 12px; padding-bottom: 12px; }
+      .nav-right { gap: 10px; }
+      .hero { min-height: 600px; }
+      .hero-sub { letter-spacing: .3em; font-size: .58rem; }
+      .about { min-height: auto; padding: 110px 25px; }
+      .gallery { padding: 80px 18px; }
+      .gallery-grid { grid-template-columns: 1fr; gap: 16px; }
+      .gallery-item, .gallery-item:nth-child(n) { width: 100%; min-height: 340px; margin: 0; padding: 24px; }
+      .gallery-item::after { inset: 10px; }
+      .gallery-caption { font-size: 1.5rem; }
+      .count-grid { gap: 12px; }
+      .count-unit strong { font-size: clamp(2.8rem, 13vw, 5rem); }
+      .count-unit span { font-size: .48rem; letter-spacing: .12em; }
+      .terminal-body { padding: 16px; font-size: .72rem; }
+      .globe-wrap { height: 70vh; min-height: 380px; }
+      .hud { font-size: .52rem; line-height: 1.7; }
+      .pin-card { padding: 26px 20px; }
+      .guide { font-size: .66rem; }
+      .code-value { font-size: 1.1rem; letter-spacing: .2em; }
+      .stats { gap: 8px; }
+      .stat strong { font-size: 1.7rem; }
+      .to-top { right: 16px; bottom: 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important; animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important; transition-duration: .01ms !important;
+      }
+    }
+
+    /* ===== No zoom outside the globe, no selection, no copy ===== */
+    html, body {
+      touch-action: pan-x pan-y;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+    input, textarea {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+    #globe, #globe canvas { touch-action: none; }
+    img, svg { -webkit-user-drag: none; user-drag: none; }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <div class="loader-mark">VESPER</div>
+      <div class="loader-line"></div>
+      <small>Entering the unknown</small>
+    </div>
+  </div>
+
+  <div id="cursor" aria-hidden="true"></div>
+  <div id="cursor-dot" aria-hidden="true"></div>
+
+  <audio id="bgAudio" loop preload="none">
+    <source src="audio.mp3" type="audio/mpeg">
+  </audio>
+
+  <nav id="topnav">
+    <a class="logo" href="#hero">Vesper</a>
+    <div class="nav-right">
+      <a class="nav-link" href="#about" data-nav="about">About</a>
+      <a class="nav-link" href="#gallery" data-nav="gallery">Atmosphere</a>
+      <a class="nav-link" href="#cosmos" data-nav="cosmos">Sky</a>
+      <a class="nav-link" href="#terminal" data-nav="terminal">Terminal</a>
+      <a class="nav-link" href="#diary" data-nav="diary">Leave a trace</a>
+      <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false">Sound: Off</button>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileMenu">Menu</button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about">About</a>
+    <a href="#gallery">Atmosphere</a>
+    <a href="#cosmos">Sky</a>
+    <a href="#terminal">Terminal</a>
+    <a href="#diary">Leave a trace</a>
+  </div>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <canvas id="particles" aria-hidden="true"></canvas>
+      <div class="hero-content" id="heroContent">
+        <div class="eyebrow">A presence without a name</div>
+        <h1 class="hero-title"><span>I</span> <span>Am</span> <span>No&nbsp;One</span></h1>
+        <p class="hero-sub">A whisper in the void</p>
+      </div>
+      <div class="scroll-hint">Scroll to discover</div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="section-inner">
+        <div class="section-kicker reveal">01 — Identity</div>
+        <h2 class="section-title reveal" data-scramble>The Unknown</h2>
+        <p class="reveal">In the quiet dusk, between the fading light and the rising mist, I exist without a name. A mere silhouette cast against the landscape of forgotten dreams.</p>
+        <p class="reveal">You seek a face, a title, a definition. But here lies only the reflection of a silent wanderer. Look closer, and you will find nothing but the echo of your own <span class="ghost-text">curiosity</span>.</p>
+      </div>
+    </section>
+
+    <section class="countdown reveal" aria-label="Countdown">
+      <div id="countBlock">
+        <div class="count-label">The veil thins in</div>
+        <div class="count-grid">
+          <div class="count-unit"><strong id="days">000</strong><span>Days</span></div>
+          <div class="count-unit"><strong id="hours">00</strong><span>Hours</span></div>
+          <div class="count-unit"><strong id="minutes">00</strong><span>Minutes</span></div>
+          <div class="count-unit"><strong id="seconds">00</strong><span>Seconds</span></div>
+        </div>
+      </div>
+      <div id="birthdayBlock" hidden>
+        <div class="count-label">Today the veil opens</div>
+        <div class="birthday-title">Happy birthday to me</div>
+        <p class="birthday-sub">Another year, a little less unknown. Leave a pin if you are here to celebrate.</p>
+      </div>
+    </section>
+
+    <section class="gallery" id="gallery">
+      <div class="gallery-head">
+        <div class="section-kicker reveal">02 — Memories</div>
+        <h2 class="reveal" data-scramble>Fragments of Silence</h2>
+        <p class="reveal">Pieces of a world that never speaks.</p>
+      </div>
+      <div class="gallery-grid">
+        <figure class="gallery-item reveal">
+          <div class="artwork" data-scene="milky" aria-hidden="true"></div>
+          <span class="gallery-index">FRAGMENT 001</span>
+          <figcaption class="gallery-caption">The quiet above</figcaption>
+        </figure>
+        <figure class="gallery-item reveal">
+          <div class="artwork" data-scene="horizon" aria-hidden="true"></div>
+          <span class="gallery-index" id="phaseLabel">FRAGMENT 002</span>
+          <figcaption class="gallery-caption">Where light fades</figcaption>
+        </figure>
+        <figure class="gallery-item reveal">
+          <div class="artwork" data-scene="orbit" aria-hidden="true"></div>
+          <span class="gallery-index">FRAGMENT 003</span>
+          <figcaption class="gallery-caption">An endless elsewhere</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="cosmos" id="cosmos">
+      <div class="section-kicker reveal">03 — Live sky</div>
+      <h2 class="section-title reveal" data-scramble>Earth, Moon &amp; Sun</h2>
+      <p class="reveal" style="color: var(--muted); max-width: 620px; margin: 0 auto">The Sun and Moon point to where they really are right now, with their paths over the last and next 24 hours. Distances are compressed so all three fit on one screen. Leave your name on the planet if you want to be seen.</p>
+
+      <div class="globe-wrap reveal">
+        <div id="globe" aria-label="Interactive globe"></div>
+        <div class="hud-title">Live · real directions</div>
+        <div class="globe-tools">
+          <button class="ghost-btn" id="frameSky" type="button">Frame sun &amp; moon</button>
+        </div>
+        <div class="pin-detail" id="pinDetail" role="dialog" aria-live="polite">
+          <button class="pd-close" id="pdClose" type="button" aria-label="Close">×</button>
+          <div class="pd-name" id="pdName"></div>
+          <div class="pd-msg" id="pdMsg"></div>
+          <div class="pd-meta"><span id="pdLoc"></span><br><span id="pdTime"></span></div>
+        </div>
+        <div class="hud" id="hud">Calculating the sky...</div>
+      </div>
+
+      <div class="stats reveal">
+        <div class="stat"><strong id="statVisits">—</strong><span>Visits today</span></div>
+        <div class="stat"><strong id="statPins">—</strong><span>Pins on the planet</span></div>
+        <div class="stat"><strong id="statPins24">—</strong><span>Placed in 24 hours</span></div>
+      </div>
+
+      <div class="pin-card reveal">
+        <h3>Place yourself</h3>
+        <p class="sub">Click the planet, use your device location, or type your coordinates. Your name, a short message and a rounded location (about 10 km) become visible to every visitor.</p>
+
+        <label class="field-label" for="pinName">Name (max 10 characters)</label>
+        <div class="pin-row">
+          <input id="pinName" type="text" maxlength="10" placeholder="Your name" autocomplete="off">
+        </div>
+
+        <label class="field-label" for="pinMsg">Message (optional, max 40 characters)</label>
+        <div class="pin-row">
+          <input id="pinMsg" type="text" maxlength="40" placeholder="A short line for the planet" autocomplete="off">
+        </div>
+
+        <label class="field-label" for="coordInput">Location</label>
+        <div class="pin-row">
+          <input id="coordInput" type="text" placeholder="e.g. 35.6892, 51.3890" autocomplete="off" spellcheck="false" aria-describedby="coordGuide">
+          <button class="ghost-btn" id="setCoords" type="button">Set coordinates</button>
+          <button class="ghost-btn" id="useLocation" type="button">Use my device</button>
+        </div>
+
+        <div class="guide" id="coordGuide">
+          <b>How to get your coordinates:</b><br>
+          <b>On a computer:</b> open Google Maps, right-click your exact spot, and the first line of the menu shows two numbers. Click them to copy.<br>
+          <b>On a phone:</b> open Google Maps, press and hold your spot, and the coordinates appear at the bottom of the screen. Tap to copy.<br>
+          Paste them here in the form <code>latitude, longitude</code>, with the latitude first. Negative numbers are for the south and west.
+        </div>
+
+        <div class="pick-line">Picked: <b id="pickedText">none yet — click the globe or enter coordinates</b></div>
+
+        <button class="pin-submit" id="pinSubmit" type="button">Place my pin</button>
+        <div class="pin-status" id="pinStatus" role="status" aria-live="polite"></div>
+
+        <div class="code-box" id="codeBox" hidden>
+          <div class="code-label">Removal code. Shown only once. Copy it and keep it safe.</div>
+          <div class="code-row">
+            <span class="code-value" id="codeValue"></span>
+            <button class="ghost-btn" id="copyCode" type="button">Copy</button>
+            <button class="ghost-btn" id="hideCode" type="button">Done</button>
+          </div>
+        </div>
+
+        <div class="pin-privacy">Only the name, message and rounded location are stored. Each pin gets a removal code that is shown once.</div>
+        <div class="my-pins" id="myPins"></div>
+      </div>
+
+      <div class="pins" id="pinList"></div>
+      <div class="pin-count" id="pinCount"></div>
+    </section>
+
+    <section class="fragments">
+      <div class="section-kicker reveal">04 — The Unknown</div>
+      <blockquote class="quote reveal">“Somewhere between who I was and who I might become, I disappeared.”</blockquote>
+      <div class="quote-credit reveal">A fragment without an author</div>
+    </section>
+
+    <section class="connections" id="connections">
+      <div class="section-kicker reveal">05 — Connections</div>
+      <h2 class="section-title reveal" data-scramble>Find the signal</h2>
+      <p class="reveal" style="color: var(--muted)">Some doors are visible. Others are left for you to find.</p>
+      <div class="socials reveal">
+        <a class="primary magnetic" href="https://t.me/HidenChat_Bot?start=8440131417" target="_blank" rel="noopener noreferrer">Message me</a>
+        <a class="magnetic" href="#terminal">Terminal</a>
+        <a class="magnetic" href="#diary">Leave a trace</a>
+      </div>
+    </section>
+
+    <section class="terminal-section" id="terminal">
+      <div class="terminal-wrap">
+        <div class="section-kicker reveal">06 — Access point</div>
+        <h2 class="section-title reveal" data-scramble>The Terminal</h2>
+        <div class="terminal reveal">
+          <div class="terminal-bar"><span>VESPER://UNKNOWN</span><span>ENCRYPTED SESSION</span></div>
+          <div class="terminal-body">
+            <div class="terminal-output" id="terminalOutput" aria-live="polite">Connection established.
+Type "help" to reveal available commands.</div>
+            <form class="terminal-form" id="terminalForm" autocomplete="off">
+              <label for="terminalInput">&gt;</label>
+              <input id="terminalInput" type="text" autocomplete="off" spellcheck="false" placeholder="enter command..." aria-label="Terminal command">
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="diary" id="diary">
+      <div class="section-kicker reveal">07 — Anonymous transmission</div>
+      <h2 class="section-title reveal" data-scramble>Leave a trace</h2>
+      <p class="lede reveal">A thought, a question, or something you have never said. Send it privately through Telegram. Nothing is shown publicly.</p>
+      <div class="reveal">
+        <a class="cta-btn magnetic" href="https://t.me/HidenChat_Bot?start=8440131417" target="_blank" rel="noopener noreferrer">
+          <span>Message me</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+        <div class="cta-note"><span class="signal-dot" aria-hidden="true"></span>Opens in Telegram</div>
+      </div>
+    </section>
+
+    <section class="visitor reveal">
+      <div>Footprints on this browser</div>
+      <strong id="visitCount">001</strong>
+      <small>Local counter · not a global visitor statistic</small>
+    </section>
+
+    <section class="end-section reveal">
+      <div>
+        <div class="end-text">The end?</div>
+        <p class="end-sub">NOTHING IS EVER REALLY OVER</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>VESPER</div>
+    <div class="foot-line">You only know what I let you see.</div>
+  </footer>
+
+  <button class="to-top magnetic" id="toTop" type="button" aria-label="Back to top">↑</button>
+
+  <div class="modal" id="passwordModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <h3 id="modalTitle">A hidden door</h3>
+      <p>This passage requires a key.</p>
+      <input id="secretPassword" type="password" placeholder="Enter the passphrase" autocomplete="off" aria-label="Passphrase">
+      <button class="cta-btn" id="unlockSecret" type="button" style="margin-top:18px;width:100%;justify-content:center"><span>Unlock</span></button>
+      <br>
+      <button class="close-modal" id="closeModal" type="button">CLOSE</button>
+    </div>
+  </div>
+
+  <div class="secret-screen" id="secretScreen" role="dialog" aria-modal="true">
+    <div>
+      <div class="section-kicker">You found it</div>
+      <h2>The silence remembers.</h2>
+      <p>Not every secret is meant to be explained. Some are only meant to be discovered.</p>
+      <button id="leaveSecret" type="button">Return to the surface</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.27.2/dist/globe.gl.min.js"></script>
+
+  <script>
+    // ===== CONFIGURATION =====
+    const CONFIG = {
+      targetDate: "2027-05-13T00:00:00",
+      messageUrl: "https://t.me/HidenChat_Bot?start=8440131417",
+      api: "",
+      secretPassword: "vesper",
+      maxAudioVolume: 0.35
+    };
+
+    const DAY_TEX = "https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-blue-marble.jpg";
+    const NIGHT_TEX = "https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-night.jpg";
+    const BUMP_TEX = "https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-topology.png";
+
+    // ===== Helpers =====
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const D2R = Math.PI / 180, R2D = 180 / Math.PI;
+    const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+
+    const toast = (message) => {
+      const el = $("#toast");
+      el.textContent = message;
+      el.classList.add("show");
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(() => el.classList.remove("show"), 2800);
+    };
+
+    const seeded = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+    function stars(rnd, n, x0, x1, y0, y1, color, rMax) {
+      let out = "";
+      for (let i = 0; i < n; i++) {
+        const x = x0 + rnd() * (x1 - x0), y = y0 + rnd() * (y1 - y0);
+        const r = (rnd() * rMax + 0.2).toFixed(2), o = (rnd() * 0.6 + 0.25).toFixed(2);
+        const ph = (rnd() * 6.283).toFixed(2), f = (0.6 + rnd() * 1.6).toFixed(2);
+        out += `<circle data-tw data-o="${o}" data-ph="${ph}" data-f="${f}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="${color}" opacity="${o}"/>`;
+      }
+      return out;
+    }
+    const twinkleList = (root) => Array.from(root.querySelectorAll("[data-tw]"), (el) => ({
+      el, o: +el.dataset.o, ph: +el.dataset.ph, f: +el.dataset.f
+    }));
+    const twinkle = (list, t) => {
+      for (const s of list) s.el.setAttribute("opacity", (s.o * (0.45 + 0.55 * Math.sin(t * s.f + s.ph))).toFixed(3));
+    };
+    function orbitPos(a, cx, cy, rx, ry, tiltDeg) {
+      const lx = rx * Math.cos(a), ly = ry * Math.sin(a), th = tiltDeg * D2R;
+      return { x: cx + lx * Math.cos(th) - ly * Math.sin(th), y: cy + lx * Math.sin(th) + ly * Math.cos(th), front: Math.sin(a) > 0 };
+    }
+
+    const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    function scramble(el) {
+      const finalText = el.textContent, start = performance.now(), dur = 900;
+      const step = (now) => {
+        const p = Math.min(1, (now - start) / dur), cut = Math.floor(p * finalText.length);
+        let out = "";
+        for (let i = 0; i < finalText.length; i++) {
+          const ch = finalText[i];
+          out += (i < cut || ch === " ") ? ch : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+        }
+        el.textContent = p < 1 ? out : finalText;
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    // ===== Astronomy (Meeus, low precision: about 0.3 degrees) =====
+    const norm360 = (a) => ((a % 360) + 360) % 360;
+    const wrap180 = (a) => ((a + 540) % 360 + 360) % 360 - 180;
+    const julianDate = (date) => date.getTime() / 86400000 + 2440587.5;
+    function gmst(jd) { return norm360(280.46061837 + 360.98564736629 * (jd - 2451545.0)); }
+
+    function sunPos(jd) {
+      const n = jd - 2451545.0;
+      const L = norm360(280.460 + 0.9856474 * n);
+      const g = norm360(357.528 + 0.9856003 * n) * D2R;
+      const lam = (L + 1.915 * Math.sin(g) + 0.020 * Math.sin(2 * g)) * D2R;
+      const eps = (23.439 - 0.0000004 * n) * D2R;
+      return {
+        ra: norm360(Math.atan2(Math.cos(eps) * Math.sin(lam), Math.cos(lam)) * R2D),
+        dec: Math.asin(Math.sin(eps) * Math.sin(lam)) * R2D
+      };
+    }
+
+    function moonPos(jd) {
+      const T = (jd - 2451545.0) / 36525;
+      const Lp = norm360(218.3164477 + 481267.88123421 * T);
+      const D = norm360(297.8501921 + 445267.1114034 * T) * D2R;
+      const M = norm360(357.5291092 + 35999.0502909 * T) * D2R;
+      const Mp = norm360(134.9633964 + 477198.8675055 * T) * D2R;
+      const F = norm360(93.2720950 + 483202.0175233 * T) * D2R;
+      const s = Math.sin, c = Math.cos;
+      const lon = Lp + 6.289 * s(Mp) + 1.274 * s(2 * D - Mp) + 0.658 * s(2 * D)
+        + 0.214 * s(2 * Mp) - 0.186 * s(M) - 0.114 * s(2 * F)
+        + 0.059 * s(2 * D - 2 * Mp) + 0.057 * s(2 * D - M - Mp)
+        + 0.053 * s(2 * D + Mp) + 0.046 * s(2 * D - M);
+      const lat = 5.128 * s(F) + 0.281 * s(Mp + F) + 0.278 * s(Mp - F)
+        + 0.173 * s(2 * D - F) + 0.055 * s(Mp + 2 * D - F) + 0.046 * s(Mp - 2 * D + F);
+      const dist = 385000.56 - 20905.355 * c(Mp) - 3699.111 * c(2 * D - Mp)
+        - 2955.968 * c(2 * D) - 569.925 * c(2 * Mp);
+      const eps = (23.439 - 0.0000004 * (jd - 2451545.0)) * D2R;
+      const L = norm360(lon) * D2R, B = lat * D2R;
+      return {
+        ra: norm360(Math.atan2(s(L) * Math.cos(eps) - Math.tan(B) * Math.sin(eps), c(L)) * R2D),
+        dec: Math.asin(s(B) * Math.cos(eps) + c(B) * Math.sin(eps) * s(L)) * R2D,
+        dist
+      };
+    }
+
+    function moonIllum(sun, moon) {
+      const ds = sun.dec * D2R, dm = moon.dec * D2R;
+      const cosPsi = Math.sin(ds) * Math.sin(dm) + Math.cos(ds) * Math.cos(dm) * Math.cos((sun.ra - moon.ra) * D2R);
+      return (1 - cosPsi) / 2;
+    }
+
+    const skyState = { k: 0.5, waxing: true };
+
+    // ===== Loader =====
+    const hideLoader = () => setTimeout(() => $("#loader").classList.add("done"), 900);
+    if (document.readyState === "complete") hideLoader();
+    else window.addEventListener("load", hideLoader);
+
+    // ===== Scroll =====
+    const nav = $("#topnav"), progress = $("#progress"), toTop = $("#toTop");
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      progress.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+      nav.classList.toggle("scrolled", scrollY > 40);
+      toTop.classList.toggle("show", scrollY > 600);
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    toTop.addEventListener("click", () => scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" }));
+
+    // ===== Mobile menu =====
+    const menuToggle = $("#menuToggle"), mobileMenu = $("#mobileMenu");
+    menuToggle.addEventListener("click", () => {
+      const open = mobileMenu.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(open));
+    });
+    mobileMenu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => {
+      mobileMenu.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    }));
+
+    // ===== Active nav link =====
+    const navLinks = $$("[data-nav]");
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach((l) => l.classList.toggle("active", l.dataset.nav === entry.target.id));
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    ["about", "gallery", "cosmos", "terminal", "diary"].forEach((id) => navObserver.observe(document.getElementById(id)));
+
+    // ===== Gallery artworks =====
+    const scenes = {
+      milky(root, id) {
+        const rnd = seeded(20240601);
+        root.innerHTML = `
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="${id}-sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#05040a"/><stop offset=".55" stop-color="#140f25"/><stop offset="1" stop-color="#2b2142"/>
+              </linearGradient>
+              <radialGradient id="${id}-core"><stop offset="0" stop-color="#f1eaff" stop-opacity=".6"/><stop offset="1" stop-color="#f1eaff" stop-opacity="0"/></radialGradient>
+              <filter id="${id}-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="16"/></filter>
+            </defs>
+            <rect width="400" height="500" fill="url(#${id}-sky)"/>
+            <g data-band transform="rotate(-34 200 250)">
+              <ellipse cx="200" cy="250" rx="340" ry="70" fill="#a994d6" opacity=".32" filter="url(#${id}-blur)"/>
+              <ellipse cx="200" cy="250" rx="260" ry="26" fill="#ece3ff" opacity=".2" filter="url(#${id}-blur)"/>
+              ${stars(rnd, 260, -80, 480, 170, 330, "#f4efff", 1.3)}
+            </g>
+            <circle data-core cx="200" cy="250" r="150" fill="url(#${id}-core)"/>
+            ${stars(rnd, 90, 0, 400, 0, 500, "#e7ddff", 1.1)}
+          </svg>`;
+        const band = root.querySelector("[data-band]"), core = root.querySelector("[data-core]");
+        const tw = twinkleList(root);
+        return (t) => {
+          band.setAttribute("transform", `rotate(${(-34 + Math.sin(t * 0.12) * 4).toFixed(2)} 200 250)`);
+          core.setAttribute("opacity", (0.75 + 0.25 * Math.sin(t * 0.9)).toFixed(3));
+          twinkle(tw, t);
+        };
+      },
+
+      horizon(root, id) {
+        const rnd = seeded(7919);
+        let ff = "";
+        for (let i = 0; i < 16; i++) {
+          const bx = 30 + rnd() * 340, by = 385 + rnd() * 85, p = rnd() * 6.283, s = 0.5 + rnd() * 0.8;
+          ff += `<circle data-ff data-bx="${bx.toFixed(1)}" data-by="${by.toFixed(1)}" data-p="${p.toFixed(2)}" data-s="${s.toFixed(2)}" cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="1.7" fill="#e9d9ff"/>`;
+        }
+        root.innerHTML = `
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="${id}-sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#07060c"/><stop offset=".5" stop-color="#1b1430"/><stop offset=".85" stop-color="#4a3766"/><stop offset="1" stop-color="#2a2140"/>
+              </linearGradient>
+              <radialGradient id="${id}-glow"><stop offset="0" stop-color="#d9ccff" stop-opacity=".5"/><stop offset="1" stop-color="#d9ccff" stop-opacity="0"/></radialGradient>
+              <mask id="${id}-phase">
+                <rect x="-100" y="-100" width="600" height="700" fill="#fff"/>
+                <circle data-shadow cx="200" cy="180" r="70" fill="#000"/>
+              </mask>
+              <linearGradient id="${id}-mist" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#c4b3e6" stop-opacity="0"/><stop offset=".5" stop-color="#c4b3e6" stop-opacity=".22"/><stop offset="1" stop-color="#c4b3e6" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="${id}-soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+            </defs>
+            <rect width="400" height="500" fill="url(#${id}-sky)"/>
+            ${stars(rnd, 70, 0, 400, 0, 300, "#ffffff", 1)}
+            <g data-moon>
+              <circle cx="200" cy="180" r="150" fill="url(#${id}-glow)" data-moon-glow/>
+              <circle cx="200" cy="180" r="70" fill="#17122a" stroke="#e8e0f7" stroke-opacity=".12"/>
+              <circle cx="200" cy="180" r="70" fill="#e8e0f7" mask="url(#${id}-phase)"/>
+              <circle cx="200" cy="180" r="74" fill="none" stroke="#e8e0f7" stroke-opacity=".12" stroke-width="10" filter="url(#${id}-soft)"/>
+            </g>
+            <path d="M0 360 Q 90 330 170 352 T 340 340 T 400 350 V500 H0Z" fill="#0a090f"/>
+            <rect data-mist="0" x="-80" y="330" width="560" height="70" fill="url(#${id}-mist)"/>
+            ${ff}
+            <path d="M0 400 Q 120 380 220 398 T 400 392 V500 H0Z" fill="#07060b"/>
+            <rect data-mist="1" x="-80" y="400" width="560" height="60" fill="url(#${id}-mist)" opacity=".7"/>
+          </svg>`;
+        const moon = root.querySelector("[data-moon]"), glow = root.querySelector("[data-moon-glow]");
+        const shadow = root.querySelector("[data-shadow]");
+        const mists = root.querySelectorAll("[data-mist]");
+        const flies = Array.from(root.querySelectorAll("[data-ff]"), (el) => ({
+          el, bx: +el.dataset.bx, by: +el.dataset.by, p: +el.dataset.p, s: +el.dataset.s
+        }));
+        const tw = twinkleList(root);
+        return (t) => {
+          const k = skyState.k;
+          const sx = skyState.waxing ? 200 - 140 * k : 200 + 140 * k;
+          shadow.setAttribute("cx", sx.toFixed(2));
+          moon.setAttribute("transform", `translate(0 ${(Math.sin(t * 0.35) * 7).toFixed(2)})`);
+          glow.setAttribute("r", (150 + Math.sin(t * 0.6) * 8).toFixed(1));
+          mists.forEach((m, i) => m.setAttribute("transform", `translate(${(Math.sin(t * 0.2 + i * 1.7) * 45).toFixed(2)} 0)`));
+          for (const f of flies) {
+            f.el.setAttribute("cx", (f.bx + Math.sin(t * f.s + f.p) * 16).toFixed(2));
+            f.el.setAttribute("cy", (f.by + Math.cos(t * f.s * 0.7 + f.p * 1.3) * 9).toFixed(2));
+            f.el.setAttribute("opacity", (0.15 + 0.85 * Math.max(0, Math.sin(t * 1.4 + f.p * 3))).toFixed(3));
+          }
+          twinkle(tw, t);
+        };
+      },
+
+      orbit(root, id) {
+        const rnd = seeded(31337), tilt = -18;
+        const bandRects = [-24, -12, 0, 12, 24].map((y, i) =>
+          `<rect x="-80" y="${250 + y}" width="160" height="${5 + (i % 2) * 3}" fill="#2a2140" opacity="${(0.25 + (i % 3) * 0.1).toFixed(2)}"/>`
+        ).join("");
+        root.innerHTML = `
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <radialGradient id="${id}-sky" cx=".5" cy=".5" r=".75"><stop offset="0" stop-color="#2a2140"/><stop offset=".55" stop-color="#110e1c"/><stop offset="1" stop-color="#050408"/></radialGradient>
+              <radialGradient id="${id}-planet" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#f3ecff"/><stop offset=".45" stop-color="#9c86c7"/><stop offset="1" stop-color="#2a2140"/></radialGradient>
+              <radialGradient id="${id}-halo"><stop offset="0" stop-color="#c7b3ef" stop-opacity=".45"/><stop offset="1" stop-color="#c7b3ef" stop-opacity="0"/></radialGradient>
+              <clipPath id="${id}-pc"><circle cx="200" cy="250" r="34"/></clipPath>
+              <filter id="${id}-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="4"/></filter>
+            </defs>
+            <rect width="400" height="500" fill="url(#${id}-sky)"/>
+            ${stars(rnd, 70, 0, 400, 0, 500, "#e2d6ff", 1.1)}
+            <g fill="none" stroke="#d2c2ef">
+              <ellipse cx="200" cy="250" rx="70" ry="22" stroke-opacity=".3" transform="rotate(${tilt} 200 250)"/>
+              <ellipse cx="200" cy="250" rx="115" ry="36" stroke-opacity=".2" transform="rotate(${tilt} 200 250)"/>
+              <ellipse cx="200" cy="250" rx="165" ry="52" stroke-opacity=".18" stroke-dasharray="2 6" transform="rotate(${tilt} 200 250)"/>
+            </g>
+            <path data-trail fill="none" stroke="#d9c9f5" stroke-opacity=".3" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="200" cy="250" r="60" fill="url(#${id}-halo)"/>
+            <circle cx="200" cy="250" r="34" fill="url(#${id}-planet)"/>
+            <g clip-path="url(#${id}-pc)"><g data-bands>${bandRects}</g></g>
+            <circle cx="200" cy="250" r="34" fill="none" stroke="#e8dcff" stroke-opacity=".35" stroke-width="2" filter="url(#${id}-glow)"/>
+            <g data-moon><circle r="12" fill="url(#${id}-halo)"/><circle r="5.5" fill="#f3ecff"/></g>
+          </svg>`;
+        const bands = root.querySelector("[data-bands]"), moon = root.querySelector("[data-moon]");
+        const trail = root.querySelector("[data-trail]");
+        const tw = twinkleList(root);
+        return (t) => {
+          bands.setAttribute("transform", `translate(${(Math.sin(t * 0.4) * 12).toFixed(2)} 0)`);
+          const a = t * 0.6;
+          const p = orbitPos(a, 200, 250, 165, 52, tilt);
+          moon.setAttribute("transform", `translate(${p.x.toFixed(2)} ${p.y.toFixed(2)})`);
+          let d = "";
+          for (let k = 0; k <= 40; k++) {
+            const q = orbitPos(a - k * 0.05, 200, 250, 165, 52, tilt);
+            d += `${k === 0 ? "M" : "L"}${q.x.toFixed(1)} ${q.y.toFixed(1)} `;
+          }
+          trail.setAttribute("d", d);
+          twinkle(tw, t);
+        };
+      }
+    };
+
+    // ===== Hero particles and shooting stars =====
+    const heroCanvas = $("#particles"), hctx = heroCanvas.getContext("2d");
+    let hw = 0, hh = 0, particles = [];
+    const shooters = [];
+    let nextShot = 2.5, heroVisible = true;
+
+    function resizeHero() {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      hw = heroCanvas.clientWidth; hh = heroCanvas.clientHeight;
+      heroCanvas.width = hw * dpr; heroCanvas.height = hh * dpr;
+      hctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      particles = Array.from({ length: Math.min(90, Math.floor(hw / 13)) }, () => ({
+        x: Math.random() * hw, y: Math.random() * hh,
+        r: Math.random() * 1.5 + 0.3, v: Math.random() * 0.22 + 0.05, a: Math.random() * 0.45 + 0.1
+      }));
+    }
+    addEventListener("resize", resizeHero);
+    resizeHero();
+    new IntersectionObserver((entries) => { heroVisible = entries[0].isIntersecting; }).observe(heroCanvas);
+
+    function drawHero(dt) {
+      hctx.clearRect(0, 0, hw, hh);
+      for (const p of particles) {
+        p.y -= p.v * 60 * dt;
+        p.x += Math.sin(p.y * 0.008) * 0.12 * 60 * dt;
+        if (p.y < -5) { p.y = hh + 5; p.x = Math.random() * hw; }
+        hctx.beginPath();
+        hctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        hctx.fillStyle = `rgba(210, 195, 238, ${p.a})`;
+        hctx.fill();
+      }
+      nextShot -= dt;
+      if (nextShot <= 0) {
+        nextShot = 4 + Math.random() * 7;
+        shooters.push({
+          x: hw * (0.45 + Math.random() * 0.6), y: Math.random() * hh * 0.35,
+          vx: -(520 + Math.random() * 260), vy: 280 + Math.random() * 160,
+          life: 0, max: 0.8 + Math.random() * 0.5
+        });
+      }
+      for (let i = shooters.length - 1; i >= 0; i--) {
+        const s = shooters[i];
+        s.life += dt;
+        if (s.life >= s.max) { shooters.splice(i, 1); continue; }
+        s.x += s.vx * dt; s.y += s.vy * dt;
+        const k = Math.sin(Math.PI * s.life / s.max);
+        const tx = s.x - s.vx * 0.14, ty = s.y - s.vy * 0.14;
+        const g = hctx.createLinearGradient(s.x, s.y, tx, ty);
+        g.addColorStop(0, `rgba(245, 238, 255, ${0.9 * k})`);
+        g.addColorStop(1, "rgba(245, 238, 255, 0)");
+        hctx.strokeStyle = g; hctx.lineWidth = 1.4;
+        hctx.beginPath(); hctx.moveTo(s.x, s.y); hctx.lineTo(tx, ty); hctx.stroke();
+      }
+    }
+
+    // ===== Gallery artworks: animated only while visible =====
+    const ART = [];
+    const artObserver = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        const item = ART.find((a) => a.el === en.target);
+        if (item) item.visible = en.isIntersecting;
+      });
+    }, { rootMargin: "120px" });
+    $$(".artwork[data-scene]").forEach((el, i) => {
+      const build = scenes[el.dataset.scene];
+      if (!build) return;
+      ART.push({ el, update: build(el, `scene${i}`), visible: true });
+      artObserver.observe(el);
+    });
+
+    // =====================================================================
+    //  GLOBE
+    // =====================================================================
+    const globeEl = $("#globe");
+    const GLOBE_R = 100, MOON_R = 3.1, SUN_R = 6.5;
+    let world = null;
+    let bodies = [], trails = [], pins = [], picked = null;
+
+    try {
+      if (typeof Globe === "function") {
+        world = Globe()(globeEl)
+          .backgroundColor("rgba(0,0,0,0)")
+          .globeImageUrl(DAY_TEX)
+          .bumpImageUrl(BUMP_TEX)
+          .atmosphereColor("#b8a9d9")
+          .atmosphereAltitude(0.22)
+          .showGraticules(true)
+          .htmlElementsData([])
+          .htmlLat("lat").htmlLng("lng")
+          .htmlAltitude((d) => d.alt)
+          .htmlElement((d) => {
+            const wrap = document.createElement("div");
+            wrap.className = "body-wrap";
+            wrap.innerHTML = `<div class="body-dot ${d.cls}"><span>${d.label}</span></div>`;
+            d.el = wrap;
+            return wrap;
+          })
+          .pointsData([])
+          .pointLat("lat").pointLng("lng").pointAltitude("alt").pointRadius("r").pointColor("color")
+          .arcsData([])
+          .arcStartLat("startLat").arcStartLng("startLng").arcEndLat("endLat").arcEndLng("endLng")
+          .arcColor(() => ["rgba(184,169,217,0)", "rgba(235,225,255,0.75)"])
+          .arcDashLength(0.35).arcDashGap(0.25).arcDashAnimateTime(3500)
+          .arcStroke(0.25).arcAltitudeAutoScale(0.25)
+          .labelLat("lat").labelLng("lng").labelText("name").labelColor("color")
+          .labelSize(0.9).labelDotRadius(0.35).labelAltitude(0.012).labelResolution(2)
+          .onGlobeClick(({ lat, lng }) => setPicked(lat, lng))
+          .onLabelClick((d) => {
+            if (d.name === "◎") return;
+            showDetail(d);
+            world.pointOfView({ lat: d.lat, lng: d.lng, altitude: 1.2 }, 1200);
+          });
+
+        const sizeGlobe = () => world.width(globeEl.clientWidth).height(globeEl.clientHeight);
+        sizeGlobe();
+        addEventListener("resize", sizeGlobe);
+
+        world.pointOfView({ lat: 18, lng: 20, altitude: 3.4 }, 0);
+        const controls = world.controls();
+        controls.enableDamping = true;
+        controls.minDistance = 160;
+        controls.maxDistance = 1500;
+        if (!reducedMotion) {
+          controls.autoRotate = true;
+          controls.autoRotateSpeed = 0.35;
+          let idleTimer = null;
+          const pause = () => {
+            controls.autoRotate = false;
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => { controls.autoRotate = true; }, 10000);
+          };
+          globeEl.addEventListener("pointerdown", pause);
+          globeEl.addEventListener("wheel", pause, { passive: true });
+        }
+      }
+    } catch {
+      world = null;
+    }
+
+    function toScene(lat, lng, alt) {
+      if (world && typeof world.getCoords === "function") return world.getCoords(lat, lng, alt);
+      const r = GLOBE_R * (1 + alt), phi = (90 - lat) * D2R, th = (90 - lng) * D2R;
+      return { x: r * Math.sin(phi) * Math.cos(th), y: r * Math.cos(phi), z: r * Math.sin(phi) * Math.sin(th) };
+    }
+
+    function isVisible(p, c) {
+      const dx = p.x - c.x, dy = p.y - c.y, dz = p.z - c.z;
+      if (dx * -c.x + dy * -c.y + dz * -c.z <= 0) return false;
+      const a = dx * dx + dy * dy + dz * dz;
+      const b = 2 * (c.x * dx + c.y * dy + c.z * dz);
+      const cc = c.x * c.x + c.y * c.y + c.z * c.z - GLOBE_R * GLOBE_R;
+      const disc = b * b - 4 * a * cc;
+      if (disc < 0) return true;
+      const t1 = (-b - Math.sqrt(disc)) / (2 * a);
+      return !(t1 > 0 && t1 < 1);
+    }
+
+    // ----- Day/night texture in the site palette -----
+    const TW = 1024, TH = 512;
+    const tc = document.createElement("canvas");
+    tc.width = TW; tc.height = TH;
+    const tctx = tc.getContext("2d", { willReadFrequently: true });
+    let dayPx = null, nightPx = null;
+
+    const loadImg = (src) => new Promise((resolve, reject) => {
+      const im = new Image();
+      im.crossOrigin = "anonymous";
+      im.onload = () => resolve(im);
+      im.onerror = reject;
+      im.src = src;
+    });
+    function pixelsOf(img) {
+      tctx.clearRect(0, 0, TW, TH);
+      tctx.drawImage(img, 0, 0, TW, TH);
+      return tctx.getImageData(0, 0, TW, TH).data;
+    }
+    async function prepareTextures() {
+      try {
+        const [d, n] = await Promise.all([loadImg(DAY_TEX), loadImg(NIGHT_TEX)]);
+        dayPx = pixelsOf(d);
+        nightPx = pixelsOf(n);
+      } catch {
+        dayPx = nightPx = null;
+      }
+    }
+
+    function renderDayNight(date) {
+      if (!world || !dayPx || !nightPx) return;
+      const jd = julianDate(date);
+      const sun = sunPos(jd);
+      const subLng = wrap180(sun.ra - gmst(jd));
+      const sLat = Math.sin(sun.dec * D2R), cLat = Math.cos(sun.dec * D2R);
+
+      const lngCos = new Float32Array(TW);
+      for (let x = 0; x < TW; x++) lngCos[x] = Math.cos((-180 + (x + 0.5) / TW * 360 - subLng) * D2R);
+
+      const out = tctx.createImageData(TW, TH);
+      const o = out.data;
+      for (let y = 0; y < TH; y++) {
+        const lat = (90 - (y + 0.5) / TH * 180) * D2R;
+        const sl = Math.sin(lat), cl = Math.cos(lat);
+        for (let x = 0; x < TW; x++) {
+          let t = clamp((sl * sLat + cl * cLat * lngCos[x] + 0.08) / 0.16, 0, 1);
+          t = t * t * (3 - 2 * t);
+          const i = (y * TW + x) * 4;
+          const dr = dayPx[i], dg = dayPx[i + 1], db = dayPx[i + 2];
+          const gray = dr * 0.3 + dg * 0.59 + db * 0.11;
+          const dR = clamp((gray + (dr - gray) * 0.55) * 0.92 + 10, 0, 255);
+          const dG = clamp((gray + (dg - gray) * 0.55) * 0.8, 0, 255);
+          const dB = clamp((gray + (db - gray) * 0.55) * 1.08 + 18, 0, 255);
+          const nR = clamp(nightPx[i] * 1.14, 0, 255);
+          const nG = clamp(nightPx[i + 1] * 0.94, 0, 255);
+          const nB = clamp(nightPx[i + 2] * 1.74 + 6, 0, 255);
+          o[i] = dR * t + nR * (1 - t);
+          o[i + 1] = dG * t + nG * (1 - t);
+          o[i + 2] = dB * t + nB * (1 - t);
+          o[i + 3] = 255;
+        }
+      }
+      tctx.putImageData(out, 0, 0);
+      world.globeImageUrl(tc.toDataURL("image/jpeg", 0.92));
+    }
+
+    // ----- Sun, Moon, paths, phase -----
+    const hud = $("#hud"), phaseLabel = $("#phaseLabel");
+
+    function bodyAt(jd) {
+      const sun = sunPos(jd), moon = moonPos(jd), g = gmst(jd);
+      return {
+        sun: { lat: sun.dec, lng: wrap180(sun.ra - g), info: sun },
+        moon: { lat: moon.dec, lng: wrap180(moon.ra - g), info: moon }
+      };
+    }
+
+    function updateSky(date) {
+      const jd = julianDate(date);
+      const now = bodyAt(jd);
+      const illum = moonIllum(now.sun.info, now.moon.info);
+      const elong = norm360(now.moon.info.ra - now.sun.info.ra);
+      skyState.k = illum;
+      skyState.waxing = elong < 180;
+
+      const phaseName = illum < 0.03 ? "NEW MOON" : illum > 0.97 ? "FULL MOON"
+        : `${skyState.waxing ? "WAXING" : "WANING"} · ${Math.round(illum * 100)}%`;
+      phaseLabel.textContent = `FRAGMENT 002 · ${phaseName}`;
+
+      bodies = [
+        { lat: now.sun.lat, lng: now.sun.lng, cls: "sun", label: "SUN", alt: SUN_R - 1 },
+        { lat: now.moon.lat, lng: now.moon.lng, cls: "moon", label: `MOON · ${Math.round(illum * 100)}%`, alt: MOON_R - 1 }
+      ];
+      if (world) world.htmlElementsData(bodies);
+
+      trails = [];
+      for (let h = -24; h <= 24; h++) {
+        const b = bodyAt(jd + h / 24), past = h < 0;
+        trails.push({ lat: b.moon.lat, lng: b.moon.lng, alt: MOON_R - 1, r: 0.22,
+          color: past ? "rgba(184,169,217,0.25)" : "rgba(255,255,255,0.75)" });
+        trails.push({ lat: b.sun.lat, lng: b.sun.lng, alt: SUN_R - 1, r: 0.22,
+          color: past ? "rgba(255,190,90,0.2)" : "rgba(255,215,130,0.65)" });
+      }
+      if (world) world.pointsData(trails);
+
+      hud.innerHTML =
+        `Moon <b>${Math.round(illum * 100)}%</b> lit · real distance <b>${Math.round(now.moon.info.dist).toLocaleString("en-US")} km</b><br>` +
+        `Sun overhead at <b>${now.sun.lat.toFixed(1)}°</b> lat, <b>${now.sun.lng.toFixed(1)}°</b> lng<br>` +
+        `Updated ${date.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })} (your time)`;
+    }
+
+    function frameSkyAll() {
+      if (!world || bodies.length < 2) return;
+      const v = (lat, lng) => [
+        Math.cos(lat * D2R) * Math.cos(lng * D2R),
+        Math.cos(lat * D2R) * Math.sin(lng * D2R),
+        Math.sin(lat * D2R)
+      ];
+      const a = v(bodies[0].lat, bodies[0].lng), b = v(bodies[1].lat, bodies[1].lng);
+      const x = a[0] + b[0], y = a[1] + b[1], z = a[2] + b[2];
+      if (Math.hypot(x, y, z) < 1e-3) return;
+      world.pointOfView({ lat: Math.atan2(z, Math.hypot(x, y)) * R2D, lng: Math.atan2(y, x) * R2D, altitude: 7 }, 1400);
+    }
+    $("#frameSky").addEventListener("click", frameSkyAll);
+
+    // ----- Pins -----
+    const colorFor = (name) => {
+      let h = 0;
+      for (const ch of name) h = (h * 31 + ch.codePointAt(0)) % 360;
+      return `hsl(${h}, 75%, 78%)`;
+    };
+
+    function haversineKm(a, b) {
+      const dLat = (b.lat - a.lat) * D2R, dLng = (b.lng - a.lng) * D2R;
+      const h = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * D2R) * Math.cos(b.lat * D2R) * Math.sin(dLng / 2) ** 2;
+      return 2 * 6371 * Math.asin(Math.sqrt(h));
+    }
+
+    function buildArcs() {
+      const recent = pins.slice(-300), arcs = [];
+      for (let i = 0; i < recent.length && arcs.length < 60; i++) {
+        for (let j = i + 1; j < recent.length && arcs.length < 60; j++) {
+          if (haversineKm(recent[i], recent[j]) < 1500) {
+            arcs.push({ startLat: recent[i].lat, startLng: recent[i].lng, endLat: recent[j].lat, endLng: recent[j].lng });
+          }
+        }
+      }
+      return arcs;
+    }
+
+    function showDetail(p) {
+      $("#pdName").textContent = p.name;
+      $("#pdMsg").textContent = p.msg || "No message.";
+      $("#pdLoc").textContent = `${p.lat}, ${p.lng}`;
+      $("#pdTime").textContent = new Date(p.t).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+      $("#pinDetail").classList.add("open");
+    }
+    $("#pdClose").addEventListener("click", () => $("#pinDetail").classList.remove("open"));
+
+    function renderPins() {
+      if (world) {
+        const labels = pins.map((p) => ({ lat: p.lat, lng: p.lng, name: p.name, msg: p.msg, t: p.t, color: colorFor(p.name) }));
+        if (picked) labels.push({ lat: picked.lat, lng: picked.lng, name: "◎", color: "#ffffff" });
+        world.labelsData(labels);
+        world.arcsData(buildArcs());
+      }
+
+      const list = $("#pinList");
+      list.innerHTML = "";
+      pins.slice(-60).reverse().forEach((p) => {
+        const b = document.createElement("button");
+        b.className = "pin-chip";
+        b.type = "button";
+        b.textContent = p.name;
+        b.title = `${p.lat}, ${p.lng}`;
+        b.addEventListener("click", () => {
+          if (world) world.pointOfView({ lat: p.lat, lng: p.lng, altitude: 1.2 }, 1200);
+          showDetail(p);
+          globeEl.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "center" });
+        });
+        list.appendChild(b);
+      });
+      $("#pinCount").textContent = pins.length
+        ? `${pins.length} pin${pins.length === 1 ? "" : "s"} on the planet`
+        : "No pins yet. Be the first.";
+    }
+
+    async function loadPins() {
+      try {
+        const r = await fetch(`${CONFIG.api}/api/pins`, { cache: "no-store" });
+        if (!r.ok) throw new Error(String(r.status));
+        pins = await r.json();
+        renderPins();
+      } catch {
+        // Keep the last known pins if the API is temporarily unreachable.
+      }
+    }
+
+    async function loadStats() {
+      try {
+        const r = await fetch(`${CONFIG.api}/api/stats`, { cache: "no-store" });
+        if (!r.ok) throw new Error(String(r.status));
+        const s = await r.json();
+        $("#statVisits").textContent = s.visitsToday.toLocaleString("en-US");
+        $("#statPins").textContent = s.pinsTotal.toLocaleString("en-US");
+        $("#statPins24").textContent = s.pins24h.toLocaleString("en-US");
+      } catch {
+        // Keep the last values.
+      }
+    }
+
+    async function countVisitOnce() {
+      const today = new Date().toISOString().slice(0, 10);
+      try {
+        if (localStorage.getItem("vesper_visit_day") === today) return;
+        const r = await fetch(`${CONFIG.api}/api/visit`, { method: "POST" });
+        if (r.ok) localStorage.setItem("vesper_visit_day", today);
+      } catch {
+        // Counting is optional.
+      }
+    }
+
+    function setPicked(lat, lng) {
+      picked = { lat: +lat.toFixed(4), lng: +lng.toFixed(4) };
+      $("#pickedText").textContent = `${picked.lat.toFixed(4)}, ${picked.lng.toFixed(4)}`;
+      if (world) renderPins();
+    }
+
+    function parseCoords(text) {
+      const m = text.trim().match(/^(-?\d{1,2}(?:\.\d+)?)\s*[,;\s]\s*(-?\d{1,3}(?:\.\d+)?)$/);
+      if (!m) return null;
+      const lat = +m[1], lng = +m[2];
+      if (lat < -90 || lat > 90 || lng < -180 || lng > 180) return null;
+      return { lat, lng };
+    }
+
+    const pinName = $("#pinName"), pinMsg = $("#pinMsg"), pinSubmit = $("#pinSubmit"), pinStatus = $("#pinStatus");
+    const coordInput = $("#coordInput");
+    const codeBox = $("#codeBox"), codeValue = $("#codeValue"), copyCodeBtn = $("#copyCode");
+    let lastCode = "";
+
+    // ----- Copy the removal code -----
+    // The page blocks normal copy, but this button copies the code on purpose.
+    let allowCopy = false;
+
+    async function copyText(text) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch {
+        // Fall through to the fallback below.
+      }
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      allowCopy = true;
+      let ok = false;
+      try { ok = document.execCommand("copy"); } catch { ok = false; }
+      allowCopy = false;
+      ta.remove();
+      return ok;
+    }
+
+    copyCodeBtn.addEventListener("click", async () => {
+      if (!lastCode) return;
+      const ok = await copyText(lastCode);
+      copyCodeBtn.textContent = ok ? "Copied" : "Copy failed";
+      copyCodeBtn.classList.toggle("copied", ok);
+      clearTimeout(copyCodeBtn.timer);
+      copyCodeBtn.timer = setTimeout(() => {
+        copyCodeBtn.textContent = "Copy";
+        copyCodeBtn.classList.remove("copied");
+      }, 2000);
+    });
+
+    function showCode(code) {
+      lastCode = code;
+      codeValue.textContent = code;
+      copyCodeBtn.textContent = "Copy";
+      codeBox.hidden = false;
+    }
+
+    // Hide the code and forget it in memory
+    $("#hideCode").addEventListener("click", () => {
+      lastCode = "";
+      codeValue.textContent = "";
+      codeBox.hidden = true;
+    });
+
+    // Pins placed on this device (ids and names only; the code is never stored)
+    const getMyPins = () => {
+      try { return JSON.parse(localStorage.getItem("vesper_my_pins") || "[]"); } catch { return []; }
+    };
+    const saveMyPins = (list) => {
+      try { localStorage.setItem("vesper_my_pins", JSON.stringify(list.slice(-5))); } catch { /* storage blocked */ }
+    };
+
+    function renderMyPins() {
+      const box = $("#myPins");
+      box.innerHTML = "";
+      const list = getMyPins();
+      if (!list.length) return;
+      const title = document.createElement("div");
+      title.textContent = "Your pins on this device";
+      title.style.marginBottom = "6px";
+      box.appendChild(title);
+      list.forEach((p) => {
+        const row = document.createElement("div");
+        row.className = "my-pin";
+        const label = document.createElement("span");
+        label.textContent = p.name;
+        const btn = document.createElement("button");
+        btn.className = "ghost-btn";
+        btn.type = "button";
+        btn.textContent = "Remove";
+        btn.addEventListener("click", () => removeMyPin(p));
+        row.append(label, btn);
+        box.appendChild(row);
+      });
+    }
+
+    async function removeMyPin(p) {
+      const code = window.prompt(`Enter the removal code for "${p.name}"`);
+      if (!code) return;
+      try {
+        const r = await fetch(`${CONFIG.api}/api/pins/delete`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: p.id, code })
+        });
+        const data = await r.json().catch(() => ({}));
+        if (r.ok || r.status === 404) saveMyPins(getMyPins().filter((x) => x.id !== p.id));
+        pinStatus.textContent = r.ok ? "Your pin was removed." : (data.detail || "Could not remove the pin.");
+      } catch {
+        pinStatus.textContent = "Network error. Try again later.";
+      }
+      renderMyPins();
+      loadPins();
+    }
+
+    $("#setCoords").addEventListener("click", () => {
+      const c = parseCoords(coordInput.value);
+      if (!c) {
+        pinStatus.textContent = "That does not look right. Use the form: latitude, longitude (for example 35.6892, 51.3890).";
+        return;
+      }
+      setPicked(c.lat, c.lng);
+      if (world) world.pointOfView({ lat: c.lat, lng: c.lng, altitude: 1.6 }, 1000);
+      pinStatus.textContent = "Coordinates set. Add your name and place the pin.";
+    });
+    coordInput.addEventListener("keydown", (e) => { if (e.key === "Enter") $("#setCoords").click(); });
+
+    $("#useLocation").addEventListener("click", () => {
+      if (!navigator.geolocation) {
+        pinStatus.textContent = "Your browser cannot share location. Enter coordinates instead.";
+        return;
+      }
+      pinStatus.textContent = "Asking for your device location...";
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude, lng = pos.coords.longitude;
+          coordInput.value = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+          setPicked(lat, lng);
+          if (world) world.pointOfView({ lat, lng, altitude: 1.6 }, 1000);
+          pinStatus.textContent = "Location set. Add your name and place the pin.";
+        },
+        () => { pinStatus.textContent = "Location was not shared. Click the globe or enter coordinates."; },
+        { enableHighAccuracy: false, timeout: 15000, maximumAge: 600000 }
+      );
+    });
+
+    pinSubmit.addEventListener("click", async () => {
+      const name = pinName.value.replace(/[\u0000-\u001F<>]/g, "").trim();
+      const msg = pinMsg.value.replace(/[\u0000-\u001F<>]/g, "").trim();
+      if (!name) { pinStatus.textContent = "Write a name first (up to 10 characters)."; return; }
+      if ([...name].length > 10) { pinStatus.textContent = "The name can be at most 10 characters."; return; }
+      if ([...msg].length > 40) { pinStatus.textContent = "The message can be at most 40 characters."; return; }
+      if (!picked) { pinStatus.textContent = "Pick a spot: click the globe or enter coordinates."; return; }
+
+      pinSubmit.disabled = true;
+      pinStatus.textContent = "Placing your pin...";
+      try {
+        const r = await fetch(`${CONFIG.api}/api/pins`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, msg, lat: picked.lat, lng: picked.lng })
+        });
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(data.detail || "Could not place the pin.");
+
+        saveMyPins([...getMyPins(), { id: data.id, name }]);
+        renderMyPins();
+        pinStatus.textContent = "Your pin is on the planet.";
+        showCode(data.code);
+        toast("Pin placed.");
+        picked = null;
+        coordInput.value = "";
+        pinName.value = "";
+        pinMsg.value = "";
+        $("#pickedText").textContent = "none yet — click the globe or enter coordinates";
+        await loadPins();
+        loadStats();
+      } catch (err) {
+        pinStatus.textContent = err.message || "Something went wrong. Try again later.";
+      } finally {
+        pinSubmit.disabled = false;
+      }
+    });
+
+    // ----- Startup -----
+    (async () => {
+      if (world) {
+        updateSky(new Date());
+        await prepareTextures();
+        renderDayNight(new Date());
+      } else {
+        hud.textContent = "The globe could not load. Check your connection.";
+      }
+      renderMyPins();
+      loadPins();
+      loadStats();
+      countVisitOnce().then(loadStats);
+    })();
+
+    setInterval(() => { if (world) updateSky(new Date()); }, 60000);
+    setInterval(() => { if (world) renderDayNight(new Date()); }, 300000);
+    setInterval(() => { if (!document.hidden) { loadPins(); loadStats(); } }, 60000);
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) { loadPins(); loadStats(); }
+    });
+
+    // ===== Single render loop (time-based, no FPS cap) =====
+    let lastFrame = performance.now(), clock = 0;
+    function frame(now) {
+      const dt = Math.min((now - lastFrame) / 1000, 0.05);
+      lastFrame = now;
+      clock += dt;
+      if (heroVisible) drawHero(dt);
+      for (const a of ART) if (a.visible) a.update(clock);
+      if (world && world.camera) {
+        const cam = world.camera().position;
+        for (const b of bodies) {
+          if (!b.el) continue;
+          b.el.style.display = isVisible(toScene(b.lat, b.lng, b.alt), cam) ? "block" : "none";
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+    if (reducedMotion) {
+      drawHero(0);
+      ART.forEach((a) => a.update(0));
+    } else {
+      requestAnimationFrame(frame);
+    }
+
+    // ===== Birthday countdown =====
+    const target = new Date(CONFIG.targetDate).getTime();
+    const pad = (n) => String(n).padStart(2, "0");
+    function updateCountdown() {
+      if (Date.now() >= target) {
+        $("#countBlock").hidden = true;
+        $("#birthdayBlock").hidden = false;
+        return;
+      }
+      let d = target - Date.now();
+      const days = Math.floor(d / 86400000); d %= 86400000;
+      const hours = Math.floor(d / 3600000); d %= 3600000;
+      const minutes = Math.floor(d / 60000); d %= 60000;
+      $("#days").textContent = String(days).padStart(3, "0");
+      $("#hours").textContent = pad(hours);
+      $("#minutes").textContent = pad(minutes);
+      $("#seconds").textContent = pad(Math.floor(d / 1000));
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ===== Reveal on scroll =====
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("active");
+        if (entry.target.hasAttribute("data-scramble") && !reducedMotion) scramble(entry.target);
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+    $$(".reveal").forEach((el) => {
+      const siblings = Array.from(el.parentElement.children).filter((c) => c.classList.contains("reveal"));
+      el.style.transitionDelay = reducedMotion ? "0ms" : `${Math.min(siblings.indexOf(el), 5) * 90}ms`;
+      revealObserver.observe(el);
+    });
+
+    // ===== Local visit counter =====
+    try {
+      const key = "vesper_local_visits";
+      const visits = Number(localStorage.getItem(key) || 0) + 1;
+      localStorage.setItem(key, String(visits));
+      $("#visitCount").textContent = String(visits).padStart(3, "0");
+    } catch {
+      $("#visitCount").textContent = "001";
+    }
+
+    // ===== Cursor, parallax, magnetic buttons, gallery spotlight =====
+    if (finePointer) {
+      const cursor = $("#cursor"), dot = $("#cursor-dot"), heroContent = $("#heroContent");
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.left = dot.style.left = e.clientX + "px";
+        cursor.style.top = dot.style.top = e.clientY + "px";
+        const root = document.documentElement.style;
+        root.setProperty("--mx", e.clientX + "px");
+        root.setProperty("--my", e.clientY + "px");
+        const x = e.clientX / innerWidth - 0.5, y = e.clientY / innerHeight - 0.5;
+        heroContent.style.setProperty("--parallax-x", (x * 13) + "px");
+        heroContent.style.setProperty("--parallax-y", (y * 13) + "px");
+      });
+      document.addEventListener("mouseover", (e) => {
+        document.body.classList.toggle("hovering", !!e.target.closest("a, button, input, textarea, [role='button']"));
+      });
+      if (!reducedMotion) {
+        $$(".magnetic").forEach((el) => {
+          el.addEventListener("mousemove", (e) => {
+            const r = el.getBoundingClientRect();
+            el.style.transform = `translate(${((e.clientX - r.left - r.width / 2) * 0.22).toFixed(1)}px, ${((e.clientY - r.top - r.height / 2) * 0.3).toFixed(1)}px)`;
+          });
+          el.addEventListener("mouseleave", () => { el.style.transform = ""; });
+        });
+      }
+      $$(".gallery-item").forEach((item) => {
+        item.addEventListener("pointermove", (e) => {
+          const r = item.getBoundingClientRect();
+          item.style.setProperty("--gx", (e.clientX - r.left) + "px");
+          item.style.setProperty("--gy", (e.clientY - r.top) + "px");
+        });
+      });
+    }
+
+    // ===== Background audio =====
+    const audio = $("#bgAudio"), soundButton = $("#soundToggle");
+    soundButton.addEventListener("click", async () => {
+      if (audio.paused) {
+        try {
+          audio.volume = CONFIG.maxAudioVolume;
+          await audio.play();
+          soundButton.textContent = "Sound: On";
+          soundButton.setAttribute("aria-pressed", "true");
+        } catch {
+          toast("The audio file could not start. Check that audio.mp3 is in the project.");
+        }
+      } else {
+        audio.pause();
+        soundButton.textContent = "Sound: Off";
+        soundButton.setAttribute("aria-pressed", "false");
+      }
+    });
+
+    // ===== Secret gate =====
+    const modal = $("#passwordModal"), secretScreen = $("#secretScreen"), passwordInput = $("#secretPassword");
+    const openGate = () => { modal.classList.add("open"); passwordInput.focus(); };
+    const closeGate = () => { modal.classList.remove("open"); passwordInput.value = ""; };
+    $("#closeModal").addEventListener("click", closeGate);
+    modal.addEventListener("click", (e) => { if (e.target === modal) closeGate(); });
+    $("#unlockSecret").addEventListener("click", () => {
+      if (passwordInput.value === CONFIG.secretPassword) {
+        closeGate();
+        secretScreen.classList.add("open");
+      } else {
+        toast("The key does not fit.");
+      }
+    });
+    passwordInput.addEventListener("keydown", (e) => { if (e.key === "Enter") $("#unlockSecret").click(); });
+    $("#leaveSecret").addEventListener("click", () => secretScreen.classList.remove("open"));
+
+    // ===== Terminal =====
+    const output = $("#terminalOutput"), terminalInput = $("#terminalInput");
+    const history = [];
+    let historyIndex = 0;
+
+    const commands = {
+      help: [
+        "Available commands:",
+        "about       Who am I?",
+        "secrets     Find hidden messages",
+        "gallery     Explore memories",
+        "sky         Where the Moon and Sun are now",
+        "stats       Live counters",
+        "contact     Open the message channel",
+        "time        Current local time",
+        "identity    Unknown identity",
+        "clear       Clear terminal",
+        "help        Show this list"
+      ].join("\n"),
+      about: "A silhouette between the fading light and the rising mist.",
+      secrets: "A door is hidden somewhere on this page. Try the word: open",
+      gallery: "Three fragments are waiting above. Return to the gallery.",
+      sky: () => {
+        const jd = julianDate(new Date());
+        const m = moonPos(jd), s = sunPos(jd);
+        return `Moon: ${Math.round(moonIllum(s, m) * 100)}% lit, ${Math.round(m.dist).toLocaleString("en-US")} km away\nSun declination: ${s.dec.toFixed(2)}°`;
+      },
+      stats: () => `Visits today: ${$("#statVisits").textContent}\nPins on the planet: ${$("#statPins").textContent}\nPlaced in 24 hours: ${$("#statPins24").textContent}`,
+      contact: () => {
+        window.open(CONFIG.messageUrl, "_blank", "noopener,noreferrer");
+        return "Opening the message channel...";
+      },
+      time: () => new Date().toLocaleString(),
+      identity: "Identity: UNKNOWN\nStatus: UNDEFINED\nPresence: DETECTED",
+      open: () => { openGate(); return "A hidden door has appeared."; },
+      clear: () => { output.textContent = ""; return ""; },
+      sudo: "Permission denied. Some mysteries remain closed."
+    };
+
+    $("#terminalForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const command = terminalInput.value.trim().toLowerCase();
+      terminalInput.value = "";
+      if (!command) return;
+      history.push(command);
+      historyIndex = history.length;
+      if (command === "clear") { output.textContent = ""; return; }
+      const known = Object.prototype.hasOwnProperty.call(commands, command);
+      const entry = known ? commands[command] : undefined;
+      const response = typeof entry === "function" ? entry() : entry;
+      output.textContent += `\n\n> ${command}\n${response ?? "Unknown command. Type help."}`;
+      output.scrollTop = output.scrollHeight;
+    });
+
+    terminalInput.addEventListener("keydown", (e) => {
+      if (!history.length) return;
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        historyIndex = Math.max(0, historyIndex - 1);
+        terminalInput.value = history[historyIndex];
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        historyIndex = Math.min(history.length, historyIndex + 1);
+        terminalInput.value = history[historyIndex] ?? "";
+      }
+    });
+
+    // ===== Keyboard: type VESPER anywhere outside text fields; Escape closes overlays =====
+    let typed = "";
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeGate();
+        secretScreen.classList.remove("open");
+        mobileMenu.classList.remove("open");
+        $("#pinDetail").classList.remove("open");
+        return;
+      }
+      if (e.target.matches("input, textarea")) return;
+      if (e.key.length !== 1 || e.ctrlKey || e.metaKey || e.altKey) return;
+      typed = (typed + e.key.toLowerCase()).slice(-6);
+      if (typed === "vesper") {
+        toast("The unknown has noticed you.");
+        typed = "";
+      }
+    });
+
+    // ===== Block page zoom outside the globe =====
+    const globeArea = $("#globe");
+    const insideGlobe = (target) => !!globeArea && target instanceof Node && globeArea.contains(target);
+    const isField = (target) => target instanceof Element && !!target.closest("input, textarea");
+
+    document.addEventListener("wheel", (e) => {
+      if ((e.ctrlKey || e.metaKey) && !insideGlobe(e.target)) e.preventDefault();
+    }, { passive: false });
+
+    ["gesturestart", "gesturechange", "gestureend"].forEach((type) => {
+      document.addEventListener(type, (e) => {
+        if (!insideGlobe(e.target)) e.preventDefault();
+      }, { passive: false });
+    });
+
+    document.addEventListener("touchmove", (e) => {
+      if (e.touches.length > 1 && !insideGlobe(e.target)) e.preventDefault();
+    }, { passive: false });
+
+    // ===== Block copy (the Copy button above is the only exception) =====
+    ["copy", "cut"].forEach((type) => {
+      document.addEventListener(type, (e) => {
+        if (allowCopy) return;
+        e.preventDefault();
+        if (e.clipboardData) e.clipboardData.setData("text/plain", "");
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      const mod = e.ctrlKey || e.metaKey;
+      if (!mod) return;
+      const k = e.key.toLowerCase();
+      if (["+", "-", "=", "_", "0", "c", "x", "s", "u", "p"].includes(k)) e.preventDefault();
+      if (k === "a" && !isField(e.target)) e.preventDefault();
+    });
+
+    document.addEventListener("contextmenu", (e) => {
+      if (!isField(e.target)) e.preventDefault();
+    });
+
+    document.addEventListener("dragstart", (e) => e.preventDefault());
+
+    document.addEventListener("selectstart", (e) => {
+      if (!isField(e.target)) e.preventDefault();
+    });
+  </script>
+</body>
+</html>
