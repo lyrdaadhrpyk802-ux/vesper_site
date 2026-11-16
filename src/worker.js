@@ -8,13 +8,14 @@ const PIN_TTL_MS = 60 * 86400000;
 const DAY_MS = 86400000;
 const MAX_BODY = 2048;
 const CACHE_TTL_SEC = 20;
+const EDIT_COOLDOWN_MS = 7 * DAY_MS; // 7 days between edits
 
 const BLOCKED = ["fuck", "shit", "bitch", "asshole", "bastard", "nigger", "faggot", "cunt", "whore"];
 
 const ROUTES = {
   "GET /api/pins":         { path: "/pins",        edgeCache: CACHE_TTL_SEC },
   "POST /api/pins":        { path: "/pins",        rateLimit: true },
-  "POST /api/pins/delete": { path: "/pins/delete" },
+  "POST /api/pins/edit":   { path: "/pins/edit",   rateLimit: true },
   "GET /api/stats":        { path: "/stats",       edgeCache: CACHE_TTL_SEC },
   "POST /api/visit":       { path: "/visit" },
 };
@@ -35,12 +36,6 @@ function randomHex(bytes) {
   return [...crypto.getRandomValues(new Uint8Array(bytes))].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-// Removal code: 6 characters without easily confused letters.
-function makeCode() {
-  const alphabet = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
-  return [...crypto.getRandomValues(new Uint8Array(6))].map((b) => alphabet[b % alphabet.length]).join("");
-}
-
 const clean = (s, max) =>
   [...String(s ?? "").replace(/[\u0000-\u001F\u007F<>]/g, "").trim()].slice(0, max).join("");
 
@@ -51,8 +46,6 @@ const isBlocked = (text) => {
 
 const dayKey = () => new Date().toISOString().slice(0, 10);
 
-// Coordinates are stored to 4 decimals (about 11 m), enough for a precise pin
-// without publishing an exact home address.
 const round4 = (n) => Math.round(n * 10000) / 10000;
 
 function corsHeaders(request) {
@@ -78,7 +71,6 @@ function jsonResponse(obj, status = 200, extra = {}) {
   });
 }
 
-// One pin creation per minute per IP, stored in the edge cache (expires by itself)
 async function isRateLimited(ipHash) {
   const cache = caches.default;
   const key = new Request(`https://ratelimit.internal/${ipHash}`);
@@ -104,7 +96,7 @@ export default {
       const ip = request.headers.get("CF-Connecting-IP") || "0.0.0.0";
       const ipHash = await sha256(ip + (env.IP_SALT || "vesper-salt"));
       if (await isRateLimited(ipHash)) {
-        return jsonResponse({ detail: "Please wait a minute before placing another pin." }, 429, cors);
+        return jsonResponse({ detail: "Please wait a minute before trying again." }, 429, cors);
       }
     }
 
@@ -146,8 +138,8 @@ export class VesperState {
   constructor(state, env) {
     this.s = state.storage;
     this.env = env;
-    this.cache = null;          // { at, list } in-memory copy of live pins
-    this.pendingDay = null;     // visits buffered in memory, flushed every 30 s
+    this.cache = null;
+    this.pendingDay = null;
     this.pendingVisits = 0;
   }
 
@@ -165,13 +157,12 @@ export class VesperState {
 
     if (pathname === "/pins" && isGet) return jsonResponse(await this.publicPins());
     if (pathname === "/pins" && !isGet) return this.createPin(data);
-    if (pathname === "/pins/delete" && !isGet) return this.deletePin(data);
+    if (pathname === "/pins/edit" && !isGet) return this.editPin(data);
     if (pathname === "/stats" && isGet) return this.stats();
     if (pathname === "/visit" && !isGet) return this.visit();
     return jsonResponse({ detail: "Not found." }, 404);
   }
 
-  // Live pins, oldest first. Expired pins are removed here.
   async alive() {
     if (this.cache && Date.now() - this.cache.at < 15000) return this.cache.list;
 
@@ -210,35 +201,53 @@ export class VesperState {
 
     const live = await this.alive();
     if (live.length >= MAX_PINS) {
-      // Make room by removing the oldest pins
       await this.dropKeys(live.slice(0, live.length - MAX_PINS + 1).map((p) => p.id));
     }
 
-    const code = makeCode();
     const id = `pin:${Date.now().toString(36)}:${randomHex(4)}`;
+    const now = Date.now();
     const rec = {
       name,
       msg,
       lat: round4(lat),
       lng: round4(lng),
-      t: Date.now(),
-      h: await sha256(code), // only the hash of the removal code is stored
+      t: now,
+      lastEdit: now, //首次创建也算一次"编辑"，从此刻开始计时7天
     };
     await this.s.put(id, rec);
     this.cache = null;
-    return jsonResponse({ ok: true, id, code }, 201);
+    return jsonResponse({ ok: true, id }, 201);
   }
 
-  async deletePin(data) {
+  async editPin(data) {
     const id = String(data.id ?? "");
-    const code = String(data.code ?? "").toUpperCase().trim();
+    const name = clean(data.name, 10);
+    const msg = clean(data.msg, 40);
+
     if (!id.startsWith("pin:")) return jsonResponse({ detail: "Pin not found." }, 404);
+    if (!name) return jsonResponse({ detail: "Name must be 1 to 10 characters." }, 400);
+    if (isBlocked(name) || isBlocked(msg)) return jsonResponse({ detail: "That word is not allowed here." }, 400);
 
     const rec = await this.s.get(id);
     if (!rec) return jsonResponse({ detail: "Pin not found." }, 404);
-    if ((await sha256(code)) !== rec.h) return jsonResponse({ detail: "The removal code does not match." }, 403);
 
-    await this.s.delete(id);
+    // Enforce 7-day cooldown server-side
+    const lastEdit = rec.lastEdit || rec.t || 0;
+    const elapsed = Date.now() - lastEdit;
+    if (elapsed < EDIT_COOLDOWN_MS) {
+      const remaining = EDIT_COOLDOWN_MS - elapsed;
+      const days = Math.floor(remaining / DAY_MS);
+      const hours = Math.floor((remaining % DAY_MS) / 3600000);
+      const timeStr = days > 0 ? `${days}d ${hours}h` : `${hours}h`;
+      return jsonResponse({ detail: `You must wait ${timeStr} before editing again.` }, 429);
+    }
+
+    // Update only name and msg; keep everything else intact
+    rec.name = name;
+    rec.msg = msg;
+    rec.lastEdit = Date.now();
+
+    await this.s.put(id, rec);
     this.cache = null;
     return jsonResponse({ ok: true });
   }
