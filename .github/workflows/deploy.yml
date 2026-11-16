@@ -14,6 +14,8 @@ jobs:
           node-version: '22'
       - name: Install Wrangler
         run: npm install --global wrangler@4 --include=optional
+      - name: Validate Config (Dry Run)
+        run: wrangler deploy --dry-run
       - name: Deploy to Cloudflare
         run: wrangler deploy
         env:
