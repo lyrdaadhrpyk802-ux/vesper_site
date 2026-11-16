@@ -50,7 +50,10 @@ const isBlocked = (text) => {
 };
 
 const dayKey = () => new Date().toISOString().slice(0, 10);
-const round1 = (n) => Math.round(n * 10) / 10;
+
+// Coordinates are stored to 4 decimals (about 11 m), enough for a precise pin
+// without publishing an exact home address.
+const round4 = (n) => Math.round(n * 10000) / 10000;
 
 function corsHeaders(request) {
   const origin = request.headers.get("Origin");
@@ -216,9 +219,8 @@ export class VesperState {
     const rec = {
       name,
       msg,
-      // Rounded to about 10 km so exact home locations are never published
-      lat: round1(lat),
-      lng: round1(lng),
+      lat: round4(lat),
+      lng: round4(lng),
       t: Date.now(),
       h: await sha256(code), // only the hash of the removal code is stored
     };

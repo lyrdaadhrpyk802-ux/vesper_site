@@ -367,7 +367,6 @@
     .pin-status { margin-top: 14px; font-size: .65rem; color: var(--muted); min-height: 18px; line-height: 1.8; text-align: center; word-break: break-word; }
     .pin-privacy { margin-top: 10px; font-size: .56rem; letter-spacing: .08em; color: #6f6880; text-align: center; line-height: 1.7; }
 
-    /* Removal code box (shown once, with a copy button) */
     .code-box {
       margin-top: 18px; padding: 18px; border: 1px solid rgba(184, 169, 217, .35);
       background: rgba(5, 5, 9, .45);
@@ -1485,8 +1484,8 @@ Type "help" to reveal available commands.</div>
     }
 
     function setPicked(lat, lng) {
-      picked = { lat: +lat.toFixed(4), lng: +lng.toFixed(4) };
-      $("#pickedText").textContent = `${picked.lat.toFixed(4)}, ${picked.lng.toFixed(4)}`;
+      picked = { lat: +lat.toFixed(5), lng: +lng.toFixed(5) };
+      $("#pickedText").textContent = `${picked.lat.toFixed(5)}, ${picked.lng.toFixed(5)}`;
       if (world) renderPins();
     }
 
@@ -1551,7 +1550,6 @@ Type "help" to reveal available commands.</div>
       codeBox.hidden = false;
     }
 
-    // Hide the code and forget it in memory
     $("#hideCode").addEventListener("click", () => {
       lastCode = "";
       codeValue.textContent = "";
@@ -1616,28 +1614,56 @@ Type "help" to reveal available commands.</div>
         return;
       }
       setPicked(c.lat, c.lng);
-      if (world) world.pointOfView({ lat: c.lat, lng: c.lng, altitude: 1.6 }, 1000);
+      if (world) world.pointOfView({ lat: c.lat, lng: c.lng, altitude: 0.35 }, 1200);
       pinStatus.textContent = "Coordinates set. Add your name and place the pin.";
     });
     coordInput.addEventListener("keydown", (e) => { if (e.key === "Enter") $("#setCoords").click(); });
 
+    // ----- Precise device location -----
+    // Watches for a few seconds and keeps the most accurate reading.
     $("#useLocation").addEventListener("click", () => {
       if (!navigator.geolocation) {
         pinStatus.textContent = "Your browser cannot share location. Enter coordinates instead.";
         return;
       }
-      pinStatus.textContent = "Asking for your device location...";
-      navigator.geolocation.getCurrentPosition(
+      pinStatus.textContent = "Searching for a precise fix. Keep the screen on and wait a few seconds...";
+
+      let best = null;
+      let watchId = null;
+      let timer = null;
+      let done = false;
+
+      const finish = () => {
+        if (done) return;
+        done = true;
+        if (watchId !== null) navigator.geolocation.clearWatch(watchId);
+        clearTimeout(timer);
+
+        if (!best) {
+          pinStatus.textContent = "Location was not available. Check the browser permission, or enter coordinates.";
+          return;
+        }
+        const { lat, lng, accuracy } = best;
+        const meters = Math.round(accuracy);
+        coordInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+        setPicked(lat, lng);
+        if (world) world.pointOfView({ lat, lng, altitude: 0.35 }, 1200);
+        pinStatus.textContent = meters <= 100
+          ? `Location set with about ${meters} m accuracy.`
+          : `Location set, but accuracy is only about ${meters} m. If it looks wrong, enter coordinates from Google Maps.`;
+      };
+
+      watchId = navigator.geolocation.watchPosition(
         (pos) => {
-          const lat = pos.coords.latitude, lng = pos.coords.longitude;
-          coordInput.value = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
-          setPicked(lat, lng);
-          if (world) world.pointOfView({ lat, lng, altitude: 1.6 }, 1000);
-          pinStatus.textContent = "Location set. Add your name and place the pin.";
+          const { latitude, longitude, accuracy } = pos.coords;
+          if (!best || accuracy < best.accuracy) best = { lat: latitude, lng: longitude, accuracy };
+          pinStatus.textContent = `Refining... current accuracy about ${Math.round(best.accuracy)} m`;
+          if (best.accuracy <= 25) finish();
         },
-        () => { pinStatus.textContent = "Location was not shared. Click the globe or enter coordinates."; },
-        { enableHighAccuracy: false, timeout: 15000, maximumAge: 600000 }
+        () => finish(),
+        { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
       );
+      timer = setTimeout(finish, 12000);
     });
 
     pinSubmit.addEventListener("click", async () => {
